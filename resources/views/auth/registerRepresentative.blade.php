@@ -36,7 +36,7 @@
         <input type="password" name="password_confirmation">
     </div>
 
-     <input type="hidden" name="is_representative" value="false" />
+     <input type="hidden" name="is_representative" value="true" />
 
     <div>
         <button type="submit">Registrarme</button>

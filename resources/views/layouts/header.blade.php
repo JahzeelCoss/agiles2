@@ -27,14 +27,11 @@
                                 <a href="index.html#about" data-scroll>About Us </a>
                             </li>
                             <li>
-                            	<a href="index.html#team" data-scroll  >Our Team </a>
-                            </li>
-
-                            <li>
-                           		<a href="index.html#blog" data-scroll  >Blog </a>
-                           	</li>
-                            <li>
-                            	<a href="index.html#contact" data-scroll >Contact Us</a>
+                                @if(Auth::User())
+                                    <a href="" title="">{!!Auth::user()->first_name!!}</a>
+                                @else
+                                    <a href="{{url('/auth/login')}}" data-scroll  >Login </a>   
+                                @endif                            	
                             </li>
                         </ul>
                      </nav>

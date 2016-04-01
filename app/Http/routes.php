@@ -33,5 +33,16 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
 // Registration routes...
 //Route::when('auth/register', 'admin');
+//
+//	Registering Users
 Route::get('auth/register', 'Auth\AuthController@getRegister');
+// Route::get('auth/register', function () {
+//     return view('auth/register');
+// });
+//Route::post('auth/register', 'Auth\AuthController@postRegister');
+//	Registering representatives
+Route::get('auth/registerRepresentative', function () {
+    return view('auth/registerRepresentative');
+});
+
 Route::post('auth/register', 'Auth\AuthController@postRegister');

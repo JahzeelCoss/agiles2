@@ -7,6 +7,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Role;
 
 class AuthController extends Controller
 {
@@ -46,6 +47,7 @@ class AuthController extends Controller
             'last_name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
+            'is_representative' => 'required',
         ]);
     }
 
@@ -57,11 +59,22 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        //var_dump($user);
+        $newUser = User::where('email','=',$data['email'])->first();
+        //if representative type of user
+        if($data['is_representative'])
+        {
+            $representative = Role::find(2);            
+            $newUser->roles()->attach($representative->id); 
+            //$user->roles()->attach(2);
+        }
+
+        return $user;
     }
 }
