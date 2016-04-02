@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use App\Company;
 use Auth;
+use Entrust;
+use App\Company;
 
-class CompanyController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+       
     }
 
     /**
@@ -29,8 +29,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        $data = null;
-        return view('companies.coe')->with('data', $data);
+        //
     }
 
     /**
@@ -41,18 +40,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $new_company = new Company();
-        if($new_company->validate($request->all(), Company::$rules)){
-            $new_company = new Company( $request->except(['_token']));   
-            $new_company->user_id = Auth::user()->id;   
-            $new_company->save();
-            $companies = Company::all();
-            //return View::make($tatus);
-            return view('companies.index')->with('companies',$companies);            
-        }else{
-            $errors = $new_company->errors();
-            return redirect()->back()->withInput()->withErrors($errors);
-        } 
+        //
     }
 
     /**
@@ -63,7 +51,15 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        //
+         $user = Auth::User();        
+        if(Entrust::hasRole('admin'))
+        {
+            //do something
+        }elseif (Entrust::hasRole('representative')) {            
+            return view('representatives.index')->with('user', $user);
+        }else{
+            return view('users.index');//o puedo rediccionarlo al index? y que luego vaya a lapagina de carreras recomendadas?
+        }
     }
 
     /**

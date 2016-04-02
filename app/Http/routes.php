@@ -46,3 +46,8 @@ Route::get('auth/registerRepresentative', function () {
 });
 
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+
+// Resources
+Route::resource('users', 'UserController');
+Route::resource('companies', 'CompanyController');

@@ -54,7 +54,7 @@
           
     @yield('body')
             
-    @include('layouts.footer')   
+    {{-- @include('layouts.footer')    --}}
 
     <!-- Back To Top Button -->
     <section id="back-top">
