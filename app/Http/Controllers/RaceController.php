@@ -63,7 +63,8 @@ class RaceController extends Controller
      */
     public function show($id)
     {
-        //
+        $race = Race::find($id);
+        return view('users.show')->with('race', $race);
     }
 
     /**
@@ -74,7 +75,9 @@ class RaceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $race = Race::find($id);
+        return view('races.edit')
+            ->with('race', $race);
     }
 
     /**
@@ -86,7 +89,14 @@ class RaceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $race = Race::find($id);        
+        if($race->validate($request->all(), Race::$rules)){
+            $race->update($request->except(['_token']));            
+            return Redirect::to('races/'.$race->id);            
+        }else{
+            $errors = $race->errors();
+            return redirect()->back()->withInput()->withErrors($errors);
+        }  
     }
 
     /**
@@ -97,6 +107,7 @@ class RaceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $race = Race::find($id);          
+        $race->delete();             
     }
 }
