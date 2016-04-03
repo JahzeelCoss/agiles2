@@ -49,14 +49,12 @@
                     </div>                                                                                            
                   </div>
                 </div>
-                <div class="col-md-6 right">
-                   
+                
+                <div class="col-md-6 right">                   
                     <div class="form-level">
                        {!! Form::textarea('contact_info', old('contact_info'), array('class'=>'form-control', 'placeholder'=>'Información de Contacto', 'required'=>'true','id'=>'contact_info', 'rows' => '5')) !!}    
                       <span class="form-icon fa fa-info-circle"></span>
-                    </div>                             
-                    
-                     <input type="hidden" name="is_representative" value="true" />
+                    </div>                          
                 </div>
                 <div class="col-md-12 text-center">
                      <button class="btn btn-main featured" type="submit">Registrarme</button>
