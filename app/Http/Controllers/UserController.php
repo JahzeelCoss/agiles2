@@ -51,7 +51,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-         $user = Auth::User();        
+        $user = Auth::User();        
         if(Entrust::hasRole('admin'))
         {
             //do something

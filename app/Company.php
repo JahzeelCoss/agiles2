@@ -35,6 +35,10 @@ class Company extends Elegant
     ];
 
     public function User(){
-    	return $this->belongsTo('App/User');
+    	return $this->belongsTo('App\User');
+    }
+
+    public function Races(){
+        return $this->hasMany('App\Race');
     }
 }

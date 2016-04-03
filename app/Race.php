@@ -40,6 +40,6 @@ class Race extends Elegant
     ];
 
     public function Company(){
-    	return $this->belongsTo('App/Company');
+    	return $this->belongsTo('App\Company');
     }
 }

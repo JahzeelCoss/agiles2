@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Redirect;
 use App\Race;
 use Auth;
+use Entrust;
 
 class RaceController extends Controller
 {
@@ -18,8 +20,17 @@ class RaceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {            
+        if (Entrust::hasRole('admin')) {
+            $races = Race::all();  
+            return view('races.all')->with('races',$races);
+        }elseif (Entrust::hasRole('representative')) {
+            $company = Auth::User()->Company;
+            $races = $company->Races;  
+            return view('races.index')->with('races',$races);
+        }else{
+            return redirect('index');
+        }        
     }
 
     /**
@@ -76,8 +87,9 @@ class RaceController extends Controller
     public function edit($id)
     {
         $race = Race::find($id);
-        return view('races.edit')
-            ->with('race', $race);
+        $data['Race'] = $race;
+        return view('races.coe')
+            ->with('data', $data);
     }
 
     /**
