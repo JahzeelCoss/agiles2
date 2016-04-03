@@ -26,8 +26,10 @@ class RaceController extends Controller
             return view('races.all')->with('races',$races);
         }elseif (Entrust::hasRole('representative')) {
             $company = Auth::User()->Company;
-            $races = $company->Races;  
-            return view('races.index')->with('races',$races);
+            $races = $company->Races; 
+            $data['company'] = $company;
+            $data['races'] = $races;
+            return view('races.index')->with('data',$data);
         }else{
             return redirect('index');
         }        

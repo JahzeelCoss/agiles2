@@ -9,23 +9,14 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="#">
-                            <img src="images/logo2.png" alt="" class="img-responsive">
+                            <img src="{{ asset('dist/theme/images/yucarun.png') }}" alt="" class="img-responsive">
                         </a>
                  </div><!--Navbar header End-->
                  	<nav class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="active">
                                 <a href="index.html#slider_part" data-scroll  class="active">Home </a>
-                            </li>
-                            <li>
-                            	<a href="index.html#service" data-scroll >Services</a>
-                            </li>
-                            <li>
-                            	<a href="index.html#portfolio" data-scroll  >Portfolio </a>
-                            </li>
-                            <li>
-                                <a href="index.html#about" data-scroll>About Us </a>
-                            </li>
+                            </li>                           
                             <li>
                                 @if(Auth::User())
                                     <a href="" title="">{!!Auth::user()->first_name!!}</a>
