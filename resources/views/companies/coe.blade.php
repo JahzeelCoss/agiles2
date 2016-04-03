@@ -1,4 +1,4 @@
-@extends('layouts.base')
+x@extends('layouts.base')
 @section('body')
 <br><br><br><br><br><br><br>
 <section class="content">
@@ -28,15 +28,15 @@
                 {!! Form::text('name', old('name'), array('class'=>'form-control', 'placeholder'=>'Nombre',
                   'required'=>'true', 'id'=>'name')) !!} 
 
-                  <label for="name">Dirección</label>
+                  <label for="address">Dirección</label>
                 {!! Form::text('address', old('address'), array('class'=>'form-control', 'placeholder'=>'Dirección',
                   'required'=>'true', 'id'=>'address')) !!} 
                   
-                  <label for="name">Correo Electrónico</label>
+                  <label for="email">Correo Electrónico</label>
                 {!! Form::text('email', old('email'), array('class'=>'form-control', 'placeholder'=>'Correo Electrónico',
                   'required'=>'true', 'id'=>'email')) !!}                                                                    
 
-                  <label for="name">Información de Contacto</label>
+                  <label for="contact_info">Información de Contacto</label>
                 {!! Form::text('contact_info', old('contact_info'), array('class'=>'form-control', 'required'=>'true',
                  'id'=>'contact_info')) !!}                  
             </div><!-- /.box-body -->
