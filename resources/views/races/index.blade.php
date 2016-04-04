@@ -19,12 +19,12 @@
             	<div class="col-lg-3 col-md-4 col-sm-6">
 				    <div class="single_blog">
 				        <div class="post_img text-center">
-				           <a href="blog-single.html"><img src="{{ asset('dist/theme/images/blog/pic3.jpg') }}" alt="" class="img-responsive"></a>
+				           <a href="{{ URL::to('races/' . $race->id) }}"><img src="{{ asset('dist/theme/images/blog/pic3.jpg') }}" alt="" class="img-responsive"></a>
 				            <div class="post-date">
 				                <span>25</span> 6
 				            </div>
 				        </div>
-				        <a href="blog-single.html"><h4>{!! $race->name !!}</h4></a>
+				        <a href="{{ URL::to('races/' . $race->id) }}"><h4>{!! $race->name !!}</h4></a>
 				        <ul class="list-inline">
 				            <li> <i class="fa fa-bookmark"></i>  {!! $race->Company->name !!}</li>
 				            <li> <i class="fa fa-users"></i> {!! $race->current_inscriptions !!}</li>

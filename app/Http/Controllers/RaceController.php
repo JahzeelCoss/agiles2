@@ -77,7 +77,7 @@ class RaceController extends Controller
     public function show($id)
     {
         $race = Race::find($id);
-        return view('users.show')->with('race', $race);
+        return view('races.show')->with('race', $race);
     }
 
     /**
