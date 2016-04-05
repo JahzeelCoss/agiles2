@@ -51,6 +51,20 @@
                      <div class="form-level">
                       {!! Form::text('contact_info', old('contact_info'), array('class'=>'form-control', 'placeholder'=>'Contacto','required'=>'true', 'id'=>'contact_info')) !!}
                         <span class="form-icon fa fa-envelope"></span>
+                    </div> 
+                    <br>
+                    <div class="form-level">
+                      {!! Form::select('category', 
+                      (['0' => 'Selecciona una Categoria'] + ['1' => 'Categoria 1'] + ['2' => 'Categoria 2']), 
+                          null, 
+                          ['class' => 'form-control']) !!}                      
+                    </div> 
+                    <br>  
+                    <div class="form-level">
+                      {!! Form::select('type', 
+                      (['0' => 'Selecciona un Tipo'] + ['1' => 'Tipo 1'] + ['2' => 'Tipo 2']), 
+                          null, 
+                          ['class' => 'form-control']) !!}                      
                     </div>                     
                   </div>
                 </div>
@@ -75,15 +89,23 @@
                     <div class="form-level">
                       {!! Form::text('finish_place', old('finish_place'), array('class'=>'form-control', 'placeholder'=>'Final','required'=>'true', 'id'=>'finish_place')) !!}
                       <span class="form-icon fa fa-arrow-circle-down"></span>
-                    </div> 
+                    </div>    
+                    
+                    <label for="projectname">Fecha de comienzo</label>
+                    {!! Form::date('planed_starting_date', null, array('class'=>'form-control','id'=>'planed_starting_date', 'required'=>'true')) !!}    
+                                                       
+                            
                      
                 </div>
+
                 <div class="col-md-12 text-center">
+                   <br><br>
                   @if(isset($data['Race']))
                     <button class="btn btn-main featured" type="submit">Editar</button>
                   @else
-                    <button class="btn btn-main featured" type="submit">Registrarme</button>
-                  @endif  
+                    <button class="btn btn-main featured" type="submit">Crear Carrera</button>
+                  @endif 
+                  <br><br><br> 
                 </div>                        
               </form>   
             </div>
