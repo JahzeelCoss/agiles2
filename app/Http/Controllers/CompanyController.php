@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Redirect;
 use App\Company;
 use Auth;
 
@@ -46,9 +47,9 @@ class CompanyController extends Controller
             $new_company = new Company( $request->except(['_token']));   
             $new_company->user_id = Auth::user()->id;   
             $new_company->save();
-            $companies = Company::all();
+            //$companies = Company::all();
             //return View::make($tatus);
-            return view('companies.index')->with('companies',$companies);            
+            return Redirect::to('index');        
         }else{
             $errors = $new_company->errors();
             return redirect()->back()->withInput()->withErrors($errors);

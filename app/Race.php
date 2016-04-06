@@ -19,7 +19,7 @@ class Race extends Elegant
      *
      * @var array
      */
-    protected $fillable = ['name','description', 'image', 'contact_info', 'distance', 'fee', 'capacity', 'start_place','finish_place', 'race_date'];
+    protected $fillable = ['name','description', 'image', 'contact_info', 'distance', 'fee', 'capacity', 'start_place','finish_place', 'race_date', 'category_id', 'type_id'];
     //faltan el tipo y la categoría
 
     /**
@@ -37,10 +37,18 @@ class Race extends Elegant
         'capacity'=> 'required|numeric',        
         'start_place' => 'required',
         'finish_place'=> 'required',
-        'race_date' => 'required',     
+        'race_date' => 'required',
+        'category_id' => 'required',
+        'type_id' => 'required',
     ];
 
     public function Company(){
     	return $this->belongsTo('App\Company');
+    }
+    public function Category(){
+        return $this->belongsTo('App\Category');
+    }
+    public function Type(){
+        return $this->belongsTo('App\Type');
     }
 }

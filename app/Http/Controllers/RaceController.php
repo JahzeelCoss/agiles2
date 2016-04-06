@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Redirect;
 use App\Race;
+use App\Type;
+use App\Category;
 use Auth;
 use Entrust;
 
@@ -29,6 +31,7 @@ class RaceController extends Controller
             $races = $company->Races; 
             $data['company'] = $company;
             $data['races'] = $races;
+            
             return view('races.index')->with('data',$data);
         }else{
             return redirect('index');
@@ -42,7 +45,10 @@ class RaceController extends Controller
      */
     public function create()
     {
-         $data = null;
+        $types = Type::all();     
+        $categories =  Category::all();        
+        $data['categories'] = $categories;
+        $data['types'] = $types;
         return view('races.coe')->with('data', $data);
     }
 
@@ -119,6 +125,11 @@ class RaceController extends Controller
     {
         $race = Race::find($id);
         $data['Race'] = $race;
+        $types = Type::all();     
+        $categories =  Category::all();        
+        $data['categories'] = $categories;
+        $data['types'] = $types;
+
         return view('races.coe')
             ->with('data', $data);
     }
@@ -155,7 +166,7 @@ class RaceController extends Controller
                 $request->file('route')->move($destinationPath, $fileName2); // uploading file to given path
                                 
             }else{
-                $fileName = $race->route;
+                $fileName2 = $race->route;
             }
 
             $race->update($request->except(['_token'])); 
@@ -178,6 +189,13 @@ class RaceController extends Controller
     public function destroy($id)
     {
         $race = Race::find($id);          
-        $race->delete();             
+        $race->delete(); 
+
+         $company = Auth::User()->Company;
+        $races = $company->Races; 
+        $data['company'] = $company;
+        $data['races'] = $races;
+        return Redirect::to('index');
+        //return view('races.index')->with('data',$data);       
     }
 }

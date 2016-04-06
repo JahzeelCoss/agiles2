@@ -54,17 +54,21 @@
                     </div> 
                     <br>
                     <div class="form-level">
-                      {!! Form::select('category', 
-                      (['0' => 'Selecciona una Categoria'] + ['1' => 'Categoria 1'] + ['2' => 'Categoria 2']), 
-                          null, 
-                          ['class' => 'form-control']) !!}                      
+                      <select class="form-control" name="category_id">
+                        @foreach($data['categories'] as $category)
+                          <option value="{{$category->id}}">{!!$category->name!!}</option>
+                        @endforeach
+                      </select>                    
                     </div> 
                     <br>  
-                    <div class="form-level">
-                      {!! Form::select('type', 
-                      (['0' => 'Selecciona un Tipo'] + ['1' => 'Tipo 1'] + ['2' => 'Tipo 2']), 
-                          null, 
-                          ['class' => 'form-control']) !!}                      
+                    <div class="form-level">                     
+                      
+                     <select class="form-control" name="type_id">
+                        @foreach($data['types'] as $type)
+                          <option value="{{$type->id}}">{!!$type->name!!}</option>
+                        @endforeach
+                      </select>
+                    </div>                                                               
                     </div> 
                     <br>
                     <div class="form-level">

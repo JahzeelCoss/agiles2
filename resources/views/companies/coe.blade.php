@@ -57,7 +57,7 @@
                     </div>                          
                 </div>
                 <div class="col-md-12 text-center">
-                     <button class="btn btn-main featured" type="submit">Registrarme</button>
+                     <button class="btn btn-main featured" type="submit">Registrar</button>
                 </div>                        
               </form>   
             </div>

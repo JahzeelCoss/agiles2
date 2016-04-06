@@ -15,7 +15,7 @@
                     <ul class="post-meta-links list-inline">
                         <li><a href="#"><span> <i class="fa fa-bookmark"></i></span>{!! $race->company->name !!}</a></li>
                         <li><a href="#"> <span><i class="fa fa-calendar"></i></span>{!! $race->race_date !!}</a></li>
-                        <li><a href="#"> <span><i class="fa fa-users"></i></span>{!! $race->current_inscriptions !!} inscritos</a></li>
+                        <li><a href="#"> <span><i class="fa fa-users"></i></span>{!! $race->current_inscriptions !!} /{!! $race->capacity !!}  inscritos</a></li>
                     </ul>
                    <p>
                        {!! $race->description !!}
@@ -26,7 +26,7 @@
                 </div>
                 <div class="tags1">
                     <p>Categoría: </p>
-                    <a href="#">Niños</a>                 
+                    <a href="#">{!! $race->category->name !!}</a>                 
                 </div>                
 	            <div class="clearfix">            	
 	            </div>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="tags">
                     <p><span class="pull-left">Tipo:&nbsp;&nbsp;</span> 
-                    <a href="#">Caminata</a> 
+                    <a href="#">{!! $race->type->name !!}</a> 
                     </p>                      
                 </div>                             
                 <div class="clearfix">              
@@ -70,7 +70,14 @@
 				        </div>
 				    </div>
 				</section>  
-
+				<div>
+					{!! Form::open(array('url' => 'races/' . $race->id, 'class' => 'pull-right' )) !!}
+                    {!! Form::hidden('_method', 'DELETE') !!}                   
+					<small>{!! Form::submit('Eliminar Esta Carrera', array('class' => 'btn btn-xs btn-danger',)) !!}	</small>
+                	{!! Form::close() !!}   
+					
+				</div>
+				<br><br>
 	            <div class="related-post">
 	                <h4>Otras Carreras</h4>
 	                <hr>

@@ -76,7 +76,7 @@ class SponsorController extends Controller
             $company = Auth::User()->Company;
             $sponsors = $company->sponsors; 
             $data['company'] = $company;
-            $data['Sponsors'] = $sponsors;
+            $data['sponsors'] = $sponsors;
             return view('sponsors.index')->with('data',$data);            
         }else{
             $errors = $new_sponsor->errors();
