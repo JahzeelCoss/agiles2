@@ -65,19 +65,21 @@
                       (['0' => 'Selecciona un Tipo'] + ['1' => 'Tipo 1'] + ['2' => 'Tipo 2']), 
                           null, 
                           ['class' => 'form-control']) !!}                      
-                    </div>                     
+                    </div> 
+                    <br>
+                    <div class="form-level">
+                      {!! Form::text('distance', old('distance'), array('class'=>'form-control', 'placeholder'=>'Distancia','required'=>'true', 'id'=>'distance')) !!}
+                        <span class="form-icon fa fa-arrows-h"></span>
+                    </div>                
+                                        
                   </div>
                 </div>
-                <div class="col-md-6 right">  
-                   <div class="form-level">
-                    {!! Form::text('distance', old('distance'), array('class'=>'form-control', 'placeholder'=>'Distancia','required'=>'true', 'id'=>'distance')) !!}
-                      <span class="form-icon fa fa-arrows-h"></span>
-                  </div>                 
+                <div class="col-md-6 right"> 
                   <div class="form-level">
-                    {!! Form::text('fee', old('fee'), array('class'=>'form-control', 'placeholder'=>'Precio',
-                    'required'=>'true', 'id'=>'fee')) !!}   
-                    <span class="form-icon fa fa-dollar"></span>
-                  </div>                             
+                        {!! Form::text('fee', old('fee'), array('class'=>'form-control', 'placeholder'=>'Precio',
+                        'required'=>'true', 'id'=>'fee')) !!}   
+                        <span class="form-icon fa fa-dollar"></span>
+                  </div>                                               
                   <div class="form-level">
                     {!! Form::text('capacity', old('capacity'), array('class'=>'form-control', 'placeholder'=>'Capacidad','required'=>'true', 'id'=>'capacity')) !!}  
                     <span class="form-icon fa fa-plus-circle"></span>
@@ -94,8 +96,11 @@
                   <label for="projectname">Fecha de comienzo</label>
                   {!! Form::date('race_date', null, array('class'=>'form-control','id'=>'race_date', 'required'=>'true')) !!}  
                   <br>
+                  <label for="image">Imagen de la carrera</label>
                   {!! Form::file('image') !!} 
-                                                     
+                  <br>
+                  <label for="image">Imagen de la Ruta</label>
+                  {!! Form::file('route') !!}       
                             
                      
                 </div>

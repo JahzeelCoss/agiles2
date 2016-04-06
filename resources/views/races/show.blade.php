@@ -40,7 +40,37 @@
                 </div>                             
                 <div class="clearfix">              
                 </div>
-                <hr>	            
+                <hr>	      
+				<div class="">
+                   <img src="{{ asset('uploads/races/routes/'.$race->route) }}" alt="" class="img-responsive"/>		                   
+                </div>
+                <section id="port-content">
+				    <div class="container">
+				        <div class="row"><!--  título -->
+				            <div class="col-md-8 col-md-offset-1 col-xm-12 col-xs-12">
+				                <div class="feature_header">
+				                    <h3 class="feature_title">Patrocinadores</h3>				                    
+				                    <div class="divider"></div>
+				                </div>
+				            </div>                        
+				        </div>
+				        <div class="row">            
+							<div id="owl-demo" class="owl-carousel owl-theme team-items">
+								@foreach($race->Company->Sponsors as $sponsor)
+									<div class="item text-center">
+					                    <div class="single-member">
+					                        <div class="overlay-hover">
+					                            <img src="{{ asset('uploads/sponsors/'.$sponsor->image) }}" alt="" class="img-responsive">                          
+					                        </div>
+					                        <h3>{!! $sponsor->name !!}</h3>                        
+					                    </div>
+					                </div>  <!-- item wrapper end -->
+								@endforeach	                
+					    	</div>			
+				        </div>
+				    </div>
+				</section>  
+
 	            <div class="related-post">
 	                <h4>Otras Carreras</h4>
 	                <hr>

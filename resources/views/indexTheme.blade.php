@@ -18,10 +18,10 @@
            	 		</div>
            	 		<div class="carousel-caption">
                	 		<div class="col-md-12 col-xs-12 text-center">
-                      <h2>Cyprass</h2>
-               	 			<h3 class="animated2"> <b>Creative</b> Modern and clean </h3>
+                      <h2>YUCARUN</h2>
+               	 			<h3 class="animated2"> <b>YUCARUN</b> YUCARUN </h3>
                	 			<div class="line"></div>
-               	 			<p class="animated3">Unique clean design</p>
+               	 			<p class="animated3">YUCARUN</p>
                	 		</div>
            	 		</div>
            	 	</div>
@@ -31,10 +31,10 @@
            	 		</div>
            	 		<div class="carousel-caption">
                	 		<div class="col-md-12 col-xs-12 text-center">
-                    <h2>Cyprass</h2>
-               	 			<h3 class="animated3"> responsive <b>Flat </b>design</h3>
+                    <h2>YUCARUN</h2>
+               	 			<h3 class="animated3"> YUCARUN <b>YUCARUN </b>YUCARUN</h3>
                	 			<div class="line"></div>
-               	 			<p class="animated2">best choice for you</p>
+               	 			<p class="animated2">YUCARUN YUCARUN YUCARUN</p>
                	 		</div>
            	 		</div>
            	 	</div>
@@ -44,10 +44,10 @@
            	 		</div>
            	 		<div class="carousel-caption">
                	 		<div class="col-md-12 col-xs-12 text-center">
-                    <h2>Cyprass</h2>
-               	 			<h3 class="animated3"> We're crazy <b>coders</b></h3>
+                    <h2>YUCARUN</h2>
+               	 			<h3 class="animated3"> YUCARUN <b>YUCARUN</b></h3>
                	 			<div class="line"></div>
-               	 			<p class="animated2"> way to success</p>
+               	 			<p class="animated2"> YUCARUN</p>
                	 		</div>
            	 		</div>
            	 	</div>
