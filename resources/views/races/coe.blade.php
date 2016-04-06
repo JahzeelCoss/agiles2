@@ -31,9 +31,9 @@
         <div class="row">
             <div class="contact_full">
               @if(isset($data['Race']))
-              {!!Form::model($data['Race'], array('url'=>'races/'.$data['Race']->id, 'method'=>'PUT'))!!}
+              {!!Form::model($data['Race'], array('url'=>'races/'.$data['Race']->id, 'method'=>'PUT', 'files'=>true))!!}
               @else
-              {!!Form::open(array('url' => 'races'))!!}
+              {!!Form::open(array('url' => 'races', 'files'=>true))!!}
               @endif              
                 <div class="col-md-6 left">
                   <div class="left_contact">
@@ -68,32 +68,34 @@
                     </div>                     
                   </div>
                 </div>
-                  <div class="col-md-6 right">  
-                     <div class="form-level">
-                      {!! Form::text('distance', old('distance'), array('class'=>'form-control', 'placeholder'=>'Distancia','required'=>'true', 'id'=>'distance')) !!}
-                        <span class="form-icon fa fa-arrows-h"></span>
-                    </div>                 
-                    <div class="form-level">
-                      {!! Form::text('fee', old('fee'), array('class'=>'form-control', 'placeholder'=>'Precio',
-                      'required'=>'true', 'id'=>'fee')) !!}   
-                      <span class="form-icon fa fa-dollar"></span>
-                    </div>                             
-                    <div class="form-level">
-                      {!! Form::text('capacity', old('capacity'), array('class'=>'form-control', 'placeholder'=>'Capacidad','required'=>'true', 'id'=>'capacity')) !!}  
-                      <span class="form-icon fa fa-plus-circle"></span>
-                    </div> 
-                    <div class="form-level">
-                      {!! Form::text('start_place', old('start_place'), array('class'=>'form-control', 'placeholder'=>'Inicio','required'=>'true', 'id'=>'start_place')) !!}   
-                      <span class="form-icon fa fa-arrow-circle-up"></span>
-                    </div> 
-                    <div class="form-level">
-                      {!! Form::text('finish_place', old('finish_place'), array('class'=>'form-control', 'placeholder'=>'Final','required'=>'true', 'id'=>'finish_place')) !!}
-                      <span class="form-icon fa fa-arrow-circle-down"></span>
-                    </div>    
-                    
-                    <label for="projectname">Fecha de comienzo</label>
-                    {!! Form::date('planed_starting_date', null, array('class'=>'form-control','id'=>'planed_starting_date', 'required'=>'true')) !!}    
-                                                       
+                <div class="col-md-6 right">  
+                   <div class="form-level">
+                    {!! Form::text('distance', old('distance'), array('class'=>'form-control', 'placeholder'=>'Distancia','required'=>'true', 'id'=>'distance')) !!}
+                      <span class="form-icon fa fa-arrows-h"></span>
+                  </div>                 
+                  <div class="form-level">
+                    {!! Form::text('fee', old('fee'), array('class'=>'form-control', 'placeholder'=>'Precio',
+                    'required'=>'true', 'id'=>'fee')) !!}   
+                    <span class="form-icon fa fa-dollar"></span>
+                  </div>                             
+                  <div class="form-level">
+                    {!! Form::text('capacity', old('capacity'), array('class'=>'form-control', 'placeholder'=>'Capacidad','required'=>'true', 'id'=>'capacity')) !!}  
+                    <span class="form-icon fa fa-plus-circle"></span>
+                  </div> 
+                  <div class="form-level">
+                    {!! Form::text('start_place', old('start_place'), array('class'=>'form-control', 'placeholder'=>'Inicio','required'=>'true', 'id'=>'start_place')) !!}   
+                    <span class="form-icon fa fa-arrow-circle-up"></span>
+                  </div> 
+                  <div class="form-level">
+                    {!! Form::text('finish_place', old('finish_place'), array('class'=>'form-control', 'placeholder'=>'Final','required'=>'true', 'id'=>'finish_place')) !!}
+                    <span class="form-icon fa fa-arrow-circle-down"></span>
+                  </div>    
+                  
+                  <label for="projectname">Fecha de comienzo</label>
+                  {!! Form::date('race_date', null, array('class'=>'form-control','id'=>'race_date', 'required'=>'true')) !!}  
+                  <br>
+                  {!! Form::file('image') !!} 
+                                                     
                             
                      
                 </div>

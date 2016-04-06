@@ -7,7 +7,7 @@
     <!-- Basic Page Needs
     ================================================== -->
         <meta charset="utf-8">
-        <title>Cypras-One page html5 template</title>
+        <title>YUCARUN</title>
         <meta name="description" content="">
         <!-- Mobile Specific Metas
     ================================================== -->

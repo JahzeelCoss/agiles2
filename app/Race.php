@@ -19,7 +19,7 @@ class Race extends Elegant
      *
      * @var array
      */
-    protected $fillable = ['name','description', 'image', 'contact_info', 'distance', 'fee', 'capacity', 'start_place','finish_place'];
+    protected $fillable = ['name','description', 'image', 'contact_info', 'distance', 'fee', 'capacity', 'start_place','finish_place', 'race_date'];
     //faltan el tipo y la categoría
 
     /**
@@ -36,7 +36,8 @@ class Race extends Elegant
         'fee' => 'required|numeric',
         'capacity'=> 'required|numeric',        
         'start_place' => 'required',
-        'finish_place'=> 'required',     
+        'finish_place'=> 'required',
+        'race_date' => 'required',     
     ];
 
     public function Company(){

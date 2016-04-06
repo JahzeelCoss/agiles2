@@ -6,14 +6,15 @@
             <!-- Portfolio item slider start -->
             <div class="col-lg-10 col-lg-offset-1 col-md-8 col-sm-12 col-xs-12">
                 <div class="">
-                    <li><img src="{{ asset('dist/theme/images/slider/s2.jpg') }}" alt="" class="img-responsive"/>
+                    <li><img src="{{ asset('uploads/races/'.$race->image) }}" alt="" class="img-responsive"/>
+
                     </li>
                 </div>
                 <div class="blog-desc">
                     <h4>{!! $race->name !!}</h4>
                     <ul class="post-meta-links list-inline">
                         <li><a href="#"><span> <i class="fa fa-bookmark"></i></span>{!! $race->company->name !!}</a></li>
-                        <li><a href="#"> <span><i class="fa fa-calendar"></i></span>23 Diciembre 2016</a></li>
+                        <li><a href="#"> <span><i class="fa fa-calendar"></i></span>{!! $race->race_date !!}</a></li>
                         <li><a href="#"> <span><i class="fa fa-users"></i></span>{!! $race->current_inscriptions !!} inscritos</a></li>
                     </ul>
                    <p>
