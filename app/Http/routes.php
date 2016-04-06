@@ -52,3 +52,4 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::resource('users', 'UserController');
 Route::resource('companies', 'CompanyController');
 Route::resource('races','RaceController');
+Route::resource('sponsors','SponsorController');

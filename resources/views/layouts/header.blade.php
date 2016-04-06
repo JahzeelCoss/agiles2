@@ -1,4 +1,4 @@
-<header id="section_header" class="navbar-fixed-top main-nav" role="navigation">
+<header id="header" class="navbar-fixed-top main-nav navbar-inverse" role="navigation">
     	<div class="container">
     		<!-- <div class="row"> -->
                  <div class="navbar-header ">

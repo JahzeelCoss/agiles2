@@ -41,4 +41,8 @@ class Company extends Elegant
     public function Races(){
         return $this->hasMany('App\Race');
     }
+
+    public function Sponsors(){
+        return $this->hasMany('App\Sponsor');
+    }
 }
