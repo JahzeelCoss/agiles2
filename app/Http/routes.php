@@ -47,9 +47,12 @@ Route::get('auth/registerRepresentative', function () {
 
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
+Route::post('companies/{id}/activate', 'CompanyController@activate');
+//Route::post('companies/{id}/delete', 'CompanyController@Eliminar');
 
 // Resources
 Route::resource('users', 'UserController');
 Route::resource('companies', 'CompanyController');
 Route::resource('races','RaceController');
 Route::resource('sponsors','SponsorController');
+Route::resource('notifications','NotificationController');

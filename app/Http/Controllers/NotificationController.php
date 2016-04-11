@@ -10,9 +10,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use App\Company;
 use App\Notification;
+use Entrust;
 use Auth;
 
-class CompanyController extends Controller
+
+class NotificationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +23,12 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        if(Entrust::hasRole('admin')){
+            $notifications = Notification::all();
+            return view('notifications.index')->with('notifications', $notifications);
+        }else{
+            return Redirect::to('index');
+        }
     }
 
     /**
@@ -31,8 +38,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        $data = null;
-        return view('companies.coe')->with('data', $data);
+        //
     }
 
     /**
@@ -43,21 +49,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $new_company = new Company();
-        $new_notification = new Notification();
-        if($new_company->validate($request->all(), Company::$rules)){
-            $new_company = new Company( $request->except(['_token']));   
-            $new_company->user_id = Auth::user()->id;   
-            $new_company->save();
-            $new_notification->company_id = $new_company->id;
-            $new_notification->save();
-            //$companies = Company::all();
-            //return View::make($tatus);
-            return Redirect::to('index');        
-        }else{
-            $errors = $new_company->errors();
-            return redirect()->back()->withInput()->withErrors($errors);
-        } 
+        //
     }
 
     /**
@@ -102,21 +94,6 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        $company = Company::find($id);          
-        $company->delete();
-        $notification = Notification::where('company_id','=', $id);          
-        $notification->delete();  
-        return Redirect::to('notifications');
-    }
-
-    public function activate($id)
-    {
-        $company = Company::find($id);
-        $company->active = true;
-        $company->update();
-
-        $notification = Notification::where('company_id','=', $id);          
-        $notification->delete(); 
-        return Redirect::to('notifications');
+        
     }
 }

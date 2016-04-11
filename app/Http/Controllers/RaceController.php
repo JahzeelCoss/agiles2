@@ -45,11 +45,19 @@ class RaceController extends Controller
      */
     public function create()
     {
-        $types = Type::all();     
-        $categories =  Category::all();        
-        $data['categories'] = $categories;
-        $data['types'] = $types;
-        return view('races.coe')->with('data', $data);
+        $user = Auth::user();
+        $company = $user->company;
+        if($company->active){
+            $types = Type::all();     
+            $categories =  Category::all();        
+            $data['categories'] = $categories;
+            $data['types'] = $types;
+            return view('races.coe')->with('data', $data);
+        }
+        else{
+            return redirect('index');   
+        }
+       
     }
 
     /**
