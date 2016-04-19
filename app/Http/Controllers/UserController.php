@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use Auth;
 use Entrust;
 use App\Company;
+use App\User;
+use App\Role;
 
 class UserController extends Controller
 {
@@ -19,7 +21,10 @@ class UserController extends Controller
      */
     public function index()
     {
-       
+       if(Entrust::hasRole('admin')){
+            $users = User::all();
+            return view('races.all')->with('races',$races);
+       }
     }
 
     /**
@@ -94,5 +99,30 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function allRunners()
+    {
+        if(Entrust::hasRole('admin')){
+            //$users = User::all();
+            $users = Role::where('name', 'runner')->first()->users()->get();
+            return view('users.allRunners')->with('users',$users);
+       }
+       else{
+            return redirect('index');
+       }
+    }
+
+    public function allRepresentatives()
+    {
+        if(Entrust::hasRole('admin')){
+            //$users = User::all();
+            $users = Role::where('name', 'representative')->first()->users()->get();
+           
+            return view('users.allRepresentatives')->with('users',$users);
+       }
+       else{
+            return redirect('index');
+       }
     }
 }

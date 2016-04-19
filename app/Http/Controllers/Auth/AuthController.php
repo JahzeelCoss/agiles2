@@ -73,7 +73,11 @@ class AuthController extends Controller
             $representative = Role::find(2);            
             $newUser->roles()->attach($representative->id); 
             //$user->roles()->attach(2);
+        }else{
+            $runner = Role::find(3);
+            $newUser->roles()->attach($runner->id);
         }
+
 
         return $user;
     }

@@ -40,6 +40,7 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 //     return view('auth/register');
 // });
 //Route::post('auth/register', 'Auth\AuthController@postRegister');
+
 //	Registering representatives
 Route::get('auth/registerRepresentative', function () {
     return view('auth/registerRepresentative');
@@ -47,6 +48,11 @@ Route::get('auth/registerRepresentative', function () {
 
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
+
+
+Route::post('users/{id}/addInfo', 'TaskController@addInfo');
+Route::get('users/all', 'UserController@allRunners');
+Route::get('users/allRepresentatives', 'UserController@allRepresentatives');
 
 // Resources
 Route::resource('users', 'UserController');

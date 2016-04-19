@@ -42,4 +42,10 @@ class User extends Model implements AuthenticatableContract,
     public function Company(){
         return $this->hasOne('App\Company');
     }
+
+    public function Roles(){
+        return $this->belongsToMany('App\Role');
+    }   
+    
+
 }
