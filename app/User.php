@@ -46,4 +46,8 @@ class User extends Model implements AuthenticatableContract,
     public function Notifications(){
         return $this->hasMany('App\Notification');
     }
+
+    public function Roles(){
+        return $this->belongsToMany('App\Role');
+    }
 }

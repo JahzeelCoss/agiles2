@@ -50,6 +50,10 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::post('companies/{id}/activate', 'CompanyController@activate');
 //Route::post('companies/{id}/delete', 'CompanyController@Eliminar');
 
+//adminCruds
+Route::get('users/allRunners', 'UserController@allRunners');
+Route::get('users/allRepresentatives', 'UserController@allRepresentatives');
+
 // Resources
 Route::resource('users', 'UserController');
 Route::resource('companies', 'CompanyController');
