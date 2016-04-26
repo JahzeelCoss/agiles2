@@ -198,12 +198,28 @@ class RaceController extends Controller
     {
         $race = Race::find($id);          
         $race->delete(); 
-
-         $company = Auth::User()->Company;
-        $races = $company->Races; 
-        $data['company'] = $company;
-        $data['races'] = $races;
+        if(Entrust::hasRole('Representative')){
+            $company = Auth::User()->Company;
+            $races = $company->Races; 
+            $data['company'] = $company;
+            $data['races'] = $races;
+        }else{
+            
+        }       
         return Redirect::to('index');
         //return view('races.index')->with('data',$data);       
+    }
+
+    public function all()
+    {
+        if(Entrust::hasRole('admin')){
+             //$users = User::all();
+             $races = Race::all();               
+             return view('races.all')->with('races',$races);
+        }
+        else{
+            return Redirect::to('index');
+        }             
+             
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -98,7 +99,21 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $isRunner = false;
+        $user = User::find($id); 
+        if($user->hasRole('runner')){
+            $isRunner = true;
+        }         
+        $user->delete(); 
+        if(Entrust::hasRole('Runner')){
+            return Redirect::to('index');
+        }else{
+            if($isRunner){
+                return Redirect::to('users/allRunners');      
+            }else{
+                return Redirect::to('users/allRepresentatives');      
+            }             
+        }       
     }
 
     public function allRunners()
@@ -106,10 +121,10 @@ class UserController extends Controller
         if(Entrust::hasRole('admin')){
              //$users = User::all();
              $users = Role::where('name', 'runner')->first()->users()->get();
-             return view('users.all')->with('users',$users);
+             return view('runners.all')->with('users',$users);
         }
         else{
-             return redirect('index');
+            return Redirect::to('index');
         }
     }
  
@@ -122,7 +137,7 @@ class UserController extends Controller
              return view('representatives.all')->with('users',$users);
         }
         else{
-             return redirect('index');
+            return Redirect::to('index');
         }
     }
 }

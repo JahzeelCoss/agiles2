@@ -53,6 +53,7 @@ Route::post('companies/{id}/activate', 'CompanyController@activate');
 //adminCruds
 Route::get('users/allRunners', 'UserController@allRunners');
 Route::get('users/allRepresentatives', 'UserController@allRepresentatives');
+Route::get('races/all', 'RaceController@all');
 
 // Resources
 Route::resource('users', 'UserController');

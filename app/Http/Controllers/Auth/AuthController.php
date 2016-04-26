@@ -59,25 +59,36 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
+        if($data['is_representative'] == "true")
+        {
+            $user = User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-        ]);
-        //var_dump($user);
-        $newUser = User::where('email','=',$data['email'])->first();
-        //if representative type of user
-        if($data['is_representative'])
-        {
+            ]);
+
+            $newUser = User::where('email','=',$data['email'])->first();
+
             $representative = Role::find(2);            
             $newUser->roles()->attach($representative->id); 
             //$user->roles()->attach(2);
         }else{
+            $user = User::create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'gender' => $data['gender'],
+            'born_date' => $data['born_date'],
+            ]);
+
+            $newUser = User::where('email','=',$data['email'])->first();
+
             $runner = Role::find(3);
             $newUser->roles()->attach($runner->id);
         }
-
+              
         return $user;
     }
 }

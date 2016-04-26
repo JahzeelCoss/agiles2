@@ -7,7 +7,7 @@
 	        <div class="row"><!--  título -->
 	            <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="feature_header text-center">                  
-	                    <h3 class="feature_title"><b>Organizadores</b></h3>                                     
+	                    <h3 class="feature_title"><b>Carreras</b></h3>                                     
 	                  <div class="divider"></div>
 	                </div>
 	            </div>
@@ -30,26 +30,26 @@
 						<thead>
 							<tr>
 								<th>Id</th>								
-								<th>Nombre(s)</th>
-								<th>Apellidos(s)</th>	
-								<th>Email</th>													
+								<th>Nombre</th>
+								<th>Compañia</th>	
+								<th>Activa</th>													
 								<th>Eliminar</th>										
 							</tr>
 						</thead>
 						<tbody>
-						@if(!empty($users) && isset($users))
-							@foreach ($users as $user)
+						@if(!empty($races) && isset($races))
+							@foreach ($races as $race)
 								<tr>
-									<td>{!!$user->id!!}</td>
-									<td>{!!$user->first_name!!}</td>
-									<td>{!!$user->last_name!!}</td>
-									<td>{!!$user->email!!}</td>
-									<td><a href="{{ URL::to('users/' . $user->id) }}" class="btn btn-info">
+									<td>{!!$race->id!!}</td>
+									<td>{!!$race->name!!}</td>
+									<td>{!!$race->company->name!!}</td>
+									<td>{!!$race->active!!}</td>
+									<td><a href="{{ URL::to('races/' . $race->id) }}" class="btn btn-info">
 											<span><i class="fa fa-search-plus"></i></span>
 										</a>
 									</td>									
 									<td>
-									{!! Form::open(array('url' => 'users/' . $user->id, 'class' => 'pull-right' )) !!}
+									{!! Form::open(array('url' => 'races/' . $race->id, 'class' => 'pull-right' )) !!}
 				                    {!! Form::hidden('_method', 'DELETE') !!}                   
 									<small>{!! Form::submit('Eliminar', array('class' => 'btn btn-xs btn-danger',)) !!}	</small>
 				                	{!! Form::close() !!}  										          	
