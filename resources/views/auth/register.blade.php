@@ -61,7 +61,7 @@
                         </div>
                         <div class="col-md-6 right">
                             <label for="projectname">Fecha de Nacimiento</label>
-                              {!! Form::date('born_date', null, array('class'=>'form-control','id'=>'race_date', 'required'=>'true')) !!}  
+                              {!! Form::date('born_date', null, array('class'=>'form-control','id'=>'born_date', 'required'=>'true')) !!}  
                             <br>
                             <div class="form-level">
                                 <input type="password" name="password" placeholder="Contraseña">

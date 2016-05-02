@@ -51,4 +51,7 @@ class Race extends Elegant
     public function Type(){
         return $this->belongsTo('App\Type');
     }
+    public function Users(){
+        return $this->belongsToMany('App\User');
+    }
 }

@@ -47,7 +47,8 @@ class RaceController extends Controller
     {
         $user = Auth::user();
         $company = $user->company;
-        if($company->active){
+
+        if($company && $company->active){
             $types = Type::all();     
             $categories =  Category::all();        
             $data['categories'] = $categories;
@@ -120,7 +121,23 @@ class RaceController extends Controller
     public function show($id)
     {
         $race = Race::find($id);
-        return view('races.show')->with('race', $race);
+        $data['race'] = $race;
+        $data['hasPermission'] = false;
+        $data['isRunner'] = false;
+        $data['isRunnerOnRace'] = false;       
+        if(Entrust::hasRole('representative')){
+            if(Auth::User()->company->id == $id){
+                $data['hasPermission'] = true;
+            }
+        }else{
+            if(Entrust::hasRole('runner')){
+                $data['isRunner'] = true;
+                if(Auth::User()->isOnRace($id)){
+                    $data['isRunnerOnRace'] = true;   
+                }
+            }
+        }       
+        return view('races.show')->with('data', $data);
     }
 
     /**
@@ -221,5 +238,15 @@ class RaceController extends Controller
             return Redirect::to('index');
         }             
              
+    }
+
+    public function registerRunner($id)
+    {
+        $race = Race::find($id);
+        $inscriptions = $race->current_inscriptions;
+        $race->current_inscriptions = $inscriptions + 1; 
+        $race->users()->attach(Auth::User()->id);
+        $race->save();
+        return Redirect::to('index');
     }
 }

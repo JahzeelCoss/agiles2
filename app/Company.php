@@ -45,4 +45,20 @@ class Company extends Elegant
     public function Sponsors(){
         return $this->hasMany('App\Sponsor');
     }
+
+    //************************
+    // notar los parentesis cuando se usa una invocacion de relacion, e spor que se usa un uqerybuilder despues como el where    
+    //***********************
+    public function OpenRaces(){
+       
+        $openRaces = $this->races()->where('active','=','1')->get();
+     //   var_dump($openRaces);
+        //return $this->races()->where('name','=','race1')->get();
+        return $openRaces;
+    }
+
+    public function ClosedRaces(){
+        $closedRaces = $this->races()->where('active','=','0')->get();
+        return $closedRaces;
+    }
 }

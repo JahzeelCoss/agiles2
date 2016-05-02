@@ -6,19 +6,19 @@
             <!-- Portfolio item slider start -->
             <div class="col-lg-10 col-lg-offset-1 col-md-8 col-sm-12 col-xs-12">
                 <div class="">
-                    <li><img src="{{ asset('uploads/races/'.$race->image) }}" alt="" class="img-responsive"/>
+                    <li><img src="{{ asset('uploads/races/'.$data['race']->image) }}" alt="" class="img-responsive"/>
 
                     </li>
                 </div>
                 <div class="blog-desc">
-                    <h4>{!! $race->name !!}</h4>
+                    <h4>{!! $data['race']->name !!}</h4>
                     <ul class="post-meta-links list-inline">
-                        <li><a href="#"><span> <i class="fa fa-bookmark"></i></span>{!! $race->company->name !!}</a></li>
-                        <li><a href="#"> <span><i class="fa fa-calendar"></i></span>{!! $race->race_date !!}</a></li>
-                        <li><a href="#"> <span><i class="fa fa-users"></i></span>{!! $race->current_inscriptions !!} /{!! $race->capacity !!}  inscritos</a></li>
+                        <li><a href="#"><span> <i class="fa fa-bookmark"></i></span>{!! $data['race']->company->name !!}</a></li>
+                        <li><a href="#"> <span><i class="fa fa-calendar"></i></span>{!! $data['race']->race_date !!}</a></li>
+                        <li><a href="#"> <span><i class="fa fa-users"></i></span>{!! $data['race']->current_inscriptions !!} /{!! $data['race']->capacity !!}  inscritos</a></li>
                     </ul>
                    <p>
-                       {!! $race->description !!}
+                       {!! $data['race']->description !!}
                    </p>
                 </div>
                 <hr>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="tags1">
                     <p>Categoría: </p>
-                    <a href="#">{!! $race->category->name !!}</a>                 
+                    <a href="#">{!! $data['race']->category->name !!}</a>                 
                 </div>                
 	            <div class="clearfix">            	
 	            </div>
@@ -35,14 +35,14 @@
                 </div>
                 <div class="tags">
                     <p><span class="pull-left">Tipo:&nbsp;&nbsp;</span> 
-                    <a href="#">{!! $race->type->name !!}</a> 
+                    <a href="#">{!! $data['race']->type->name !!}</a> 
                     </p>                      
                 </div>                             
                 <div class="clearfix">              
                 </div>
                 <hr>	      
 				<div class="">
-                   <img src="{{ asset('uploads/races/routes/'.$race->route) }}" alt="" class="img-responsive"/>		                   
+                   <img src="{{ asset('uploads/races/routes/'.$data['race']->route) }}" alt="" class="img-responsive"/>		                   
                 </div>
                 <section id="port-content">
 				    <div class="container">
@@ -56,7 +56,7 @@
 				        </div>
 				        <div class="row">            
 							<div id="owl-demo" class="owl-carousel owl-theme team-items">
-								@foreach($race->Company->Sponsors as $sponsor)
+								@foreach($data['race']->Company->Sponsors as $sponsor)
 									<div class="item text-center">
 					                    <div class="single-member">
 					                        <div class="overlay-hover">
@@ -71,10 +71,33 @@
 				    </div>
 				</section>  
 				<div>
-					{!! Form::open(array('url' => 'races/' . $race->id, 'class' => 'pull-right' )) !!}
-                    {!! Form::hidden('_method', 'DELETE') !!}                   
-					<small>{!! Form::submit('Eliminar Esta Carrera', array('class' => 'btn btn-xs btn-danger',)) !!}	</small>
-                	{!! Form::close() !!}   
+					<div class="divider"></div>
+					@if($data['hasPermission']) 
+						{!! Form::open(array('url' => 'races/' . $data['race']->id, 'class' => 'pull-right' )) !!}
+	                    {!! Form::hidden('_method', 'DELETE') !!}                   
+						<small>{!! Form::submit('Eliminar Esta Carrera', array('class' => 'btn btn-xs btn-danger',)) !!}	</small>
+	                	{!! Form::close() !!}   
+					@endif
+
+					@if(!$data['race']->active)
+						<span class="text-center"><h4>No puedes inscribirte a esta Carrera</h4></span>
+					@else 
+						@if($data['race']->inscriptions_closed)
+							<span class="text-center"><h4>El Cupo de esta Carrera está lleno</h4></span>
+						@else 
+							@if($data['isRunner']) 
+								@if ($data['isRunnerOnRace'])
+									<span class="text-center"><h4>Ya estás inscrito a esta carrera!</h4></span>
+								@else 
+									{!! Form::open(array('url' => 'races/' . $data['race']->id . '/registerRunner', 'class' => 'text-center', 'action' => 'RaceController@registerRunner' )) !!} 	     
+									{!! Form::submit('Inscribirme a la Carrera!', array('class' => 'btn btn-xs btn-info',)) !!}	   
+									                       
+				                	{!! Form::close() !!}
+								@endif						  
+							@endif	
+						@endif
+					@endif
+										
 					
 				</div>
 				<br><br>

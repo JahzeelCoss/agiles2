@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Input;
 use Auth;
+use Illuminate\Support\Facades\Validator;
 use Entrust;
 use App\Company;
 use App\User;
@@ -57,15 +59,31 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = Auth::User();        
-        if(Entrust::hasRole('admin'))
-        {
-            //do something
-        }elseif (Entrust::hasRole('representative')) {            
-            return view('representatives.index')->with('user', $user);
-        }else{
-            return view('users.index');//o puedo rediccionarlo al index? y que luego vaya a lapagina de carreras recomendadas?
+        // $user = Auth::User();        
+        // if(Entrust::hasRole('admin'))
+        // {
+        //     //do something
+        // }elseif (Entrust::hasRole('representative')) {            
+        //     return view('representatives.index')->with('user', $user);
+        // }else{
+        //     return view('users.index');//o puedo rediccionarlo al index? y que luego vaya a lapagina de carreras recomendadas?
+        // }
+        $user = Auth::User();
+        $data['user'] = $user;
+        $data['isTheUser'] = false;     
+        if (Auth::user()==$user) {
+            $data['isTheUser'] = true;  
         }
+        if($user->hasRole('representative')){
+            $data['openRaces'] = $user->company->OpenRaces();
+            $data['closedRaces'] = $user->company->ClosedRaces();
+            //return $user->company->OpenRaces();
+            return view('representatives.show')->with('data', $data);
+        }
+         if($user->hasRole('runner')){
+            return view('runners.show')->with('data', $data);
+        }
+        
     }
 
     /**
@@ -76,7 +94,19 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+         // get the user
+        $user = user::find($id);
+        if(Auth::User()->id == $id){
+            if($user->hasRole('representative')){
+            return view('representatives.edit')->with('user', $user);
+            }
+            if($user->hasRole('runner')){
+                return view('runners.edit')->with('user', $user);
+            }            
+        }else{
+            return Redirect::to('index');  
+        }        
+           
     }
 
     /**
@@ -88,7 +118,71 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       $user = user::find($id);     
+
+        if (empty(Input::get('password'))) {//si no escribió una contraseña
+
+            $validator = Validator::make($request->all(), [
+            'first_name'=> 'required',
+            'last_name'=> 'required',
+            'email' => 'required|email|unique:users,email,'.$id,                       
+            ]);
+
+            if ($validator->fails()) {
+                $errors = $user->errors();
+                    return redirect()->back()->withInput()->withErrors($errors);
+            }else{
+                if ($request->HasFile('profile_image'))
+                {  
+                    $destinationPath = 'uploads/users'; // upload path
+                    $extension = $request->file('profile_image')->getClientOriginalExtension(); // getting image extension
+                    $fileName = rand(11111,99999).'.'.$extension; // renameing image
+                    $request->file('profile_image')->move($destinationPath, $fileName); // uploading file to given path
+                                       
+                }else{
+                    $fileName = $user->image;
+                }
+                $user->update($request->except(['_token','password'])); 
+                $user->profile_image = $fileName;                                        
+                $user->save();
+                // redirect             
+                return Redirect::to('index');               
+            }
+
+            
+        }else{//si escribió una contraseña
+
+
+            $validator = Validator::make($request->all(), [
+            'first_name'=> 'required',
+            'last_name'=> 'required',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'password' => 'required|confirmed|min:5',  
+            ]);
+
+            if ($validator->fails()) {
+                $errors = $user->errors();
+                    return redirect()->back()->withInput()->withErrors($errors);
+            }else{
+                 if ($request->HasFile('profile_image'))
+                {  
+                    $destinationPath = 'uploads/users'; // upload path
+                    $extension = $request->file('profile_image')->getClientOriginalExtension(); // getting image extension
+                    $fileName = rand(11111,99999).'.'.$extension; // renameing image
+                    $request->file('profile_image')->move($destinationPath, $fileName); // uploading file to given path
+                                       
+                }else{
+                    $fileName = $user->image;
+                }
+                $user->update($request->except(['_token','password'])); 
+                $user->profile_image = $fileName;   
+                $user->password  = bcrypt(Input::get('password'));                                       
+                $user->save();
+                // redirect             
+                return Redirect::to('index');                   
+            }
+        }          
+            
     }
 
     /**

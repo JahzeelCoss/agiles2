@@ -19,7 +19,7 @@
                             </li>                           
                             <li>
                                 @if(Auth::User())
-                                    <a href="" title="">{!!Auth::user()->first_name!!}</a>
+                                    <a href="{{url('/users/'.Auth::user()->id)}}" title="">{!!Auth::user()->first_name!!}</a>
                                 @else
                                     <a href="{{url('/auth/login')}}" data-scroll  >Login </a>   
                                 @endif                            	

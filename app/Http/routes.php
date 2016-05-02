@@ -55,6 +55,9 @@ Route::get('users/allRunners', 'UserController@allRunners');
 Route::get('users/allRepresentatives', 'UserController@allRepresentatives');
 Route::get('races/all', 'RaceController@all');
 
+//Register paricipant
+Route::post('races/{id}/registerRunner', 'RaceController@registerRunner');
+
 // Resources
 Route::resource('users', 'UserController');
 Route::resource('companies', 'CompanyController');
