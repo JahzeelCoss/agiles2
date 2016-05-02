@@ -198,6 +198,19 @@ class RaceController extends Controller
             $race->image = $fileName;
             $race->route = $fileName2;
             $race->save();           
+
+            //se envian los mensajes a los inscritos
+            $users = $race->users;
+            $data['race'] = $race;
+            foreach ($users as $user) {
+                           
+                Mail::send('emails.changeOnRace', $data, function ($message) {
+                    $message->from('us@example.com', 'YUCARUN');
+                    $message->to($user->email);
+                    $message->subject('Una Carrera ha cambiado si información.');
+                });
+            }
+            
             return Redirect::to('races/'.$race->id);            
         }else{
             $errors = $race->errors();
