@@ -58,6 +58,11 @@ Route::get('races/all', 'RaceController@all');
 //Register paricipant
 Route::post('races/{id}/registerRunner', 'RaceController@registerRunner');
 
+//Searches Routes
+Route::get('/search/race', 'SearchController@getPage');
+Route::post('search/searchRace', 'SearchController@searchRace');
+
+
 // Resources
 Route::resource('users', 'UserController');
 Route::resource('companies', 'CompanyController');
