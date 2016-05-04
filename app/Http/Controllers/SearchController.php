@@ -23,17 +23,22 @@ class SearchController extends Controller
     	$races = null;
         //return $request->input('name');
         $raceName = $request->input('name');
+        $data = null;
+        $data['isTheUser'] = false;
         //return $raceName;
     	if(Entrust::hasRole('representative')){
     		$user = Auth::user();            
-    		$races = $user->company->races()->where("name","=",$raceName)->get();
+    		$races = $user->company->races()->where("name","=",$raceName)->get(); 
+            $data['isTheUser'] = true;
             // return $races;
     	}else{
     		//$races = Race::all()->where("name","=",$raceName)->get();	
             $races = Race::where("name","=",$raceName)->get();            
     	}
        // return $races;
-        return view('searches.searchRace')->with('races', $races);
+       $data['races'] = $races;
+
+        return view('searches.searchRace')->with('data', $data);
     }
 
 }

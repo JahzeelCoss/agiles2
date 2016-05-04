@@ -53,12 +53,15 @@
 							<th>Nombre</th>
 							<th>Compañia</th>	
 							<th>Activa</th>													
-							<th>Eliminar</th>										
+							@if(isset($data) && $data['isTheUser'])
+								<th>Eliminar</th>	
+							@endif																
 						</tr>
 					</thead>
 					<tbody>
-					@if(!empty($races) && isset($races))
-						@foreach ($races as $race)
+					@if(isset($data) && $data['isTheUser'])
+						@if(!empty($data['races']) && isset($data['races']))
+						@foreach ($data['races'] as $race)
 							<tr>
 								<td>{!!$race->id!!}</td>
 								<td>{!!$race->name!!}</td>
@@ -68,16 +71,39 @@
 									<a href="{{ URL::to('races/' . $race->id) }}" class="btn btn-info">
 										<span><i class="fa fa-search-plus"></i></span>
 									</a>
-								</td>									
+								</td>
+								
 								<td>
 								{!! Form::open(array('url' => 'races/' . $race->id, 'class' => 'pull-right' )) !!}
 			                    {!! Form::hidden('_method', 'DELETE') !!}                   
 								<small>{!! Form::submit('Eliminar', array('class' => 'btn btn-xs btn-danger',)) !!}	</small>
 			                	{!! Form::close() !!}  										          	
 								</td>
+
 							</tr>
 						@endforeach
+						@endif
+					@else	
+						@if(!empty($data['races']) && isset($data['races']))
+						@foreach ($data['races'] as $race)
+							<tr>
+								<td>{!!$race->id!!}</td>
+								<td>{!!$race->name!!}</td>
+								<td>{!!$race->company->name!!}</td>
+								<td>{!!$race->active!!}</td>
+								<td>
+									<a href="{{ URL::to('races/' . $race->id) }}" class="btn btn-info">
+										<span><i class="fa fa-search-plus"></i></span>
+									</a>
+								</td>
+								
+								
+
+							</tr>
+						@endforeach
+						@endif
 					@endif
+					
 					</tbody>
 				</table>				
 			</div>
