@@ -28,12 +28,12 @@ class SearchController extends Controller
         //return $raceName;
     	if(Entrust::hasRole('representative')){
     		$user = Auth::user();            
-    		$races = $user->company->races()->where("name","=",$raceName)->get(); 
+    		$races = $user->company->races()->where("name","LIKE",'%'.$raceName.'%')->get(); 
             $data['isTheUser'] = true;
             // return $races;
     	}else{
     		//$races = Race::all()->where("name","=",$raceName)->get();	
-            $races = Race::where("name","=",$raceName)->get();            
+            $races = Race::where("name","LIKE",'%'.$raceName.'%')->get();            
     	}
        // return $races;
        $data['races'] = $races;
