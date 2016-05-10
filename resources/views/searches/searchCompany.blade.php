@@ -7,19 +7,19 @@
 	        <div class="row"><!--  título -->
 	            <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="feature_header text-center">                  
-	                    <h3 class="feature_title"><b>Buscar Carreras</b></h3>                                     
+	                    <h3 class="feature_title"><b>Buscar Compañias</b></h3>                                     
 	                  <div class="divider"></div>
 	                </div>
 	            </div>
 	            <br><br><br>
 	            <div class="col-sm-10 col-sm-offset-1">		
 
-				<form method="POST" action="/search/searchRace" class="">
+				<form method="POST" class="">
 					{!! csrf_field() !!}
 	            	<div class="col-xs-8">	            		
 
 				        <div class="form-group">
-				          {!! Form::text('name', old('name'), array('class'=>'form-control', 'placeholder'=>'Ingrese la carrera',
+				          {!! Form::text('name', old('name'), array('class'=>'form-control', 'placeholder'=>'Ingrese la compañia',
                       		'id'=>'name')) !!} 
 				        </div>
 				        
@@ -52,30 +52,23 @@
 							<th>Id</th>								
 							<th>Nombre</th>
 							<th>Compañia</th>	
-							<th>Activa</th>		
-							<th>Ver</th>											
-							@if(isset($data) && $data['isTheUser'])
-								<th>Eliminar</th>	
-							@endif																
+							<th>Activa</th>													
+							<th>Eliminar</th>							
+
 						</tr>
 					</thead>
 					<tbody>
-					@if(isset($data) && $data['isTheUser'])
-						@if(!empty($data['races']) && isset($data['races']))
-						@foreach ($data['races'] as $race)
+					@if(isset($data))
+						@if(!empty($data['companies']) && isset($data['companies']))
+						@foreach ($data['companies'] as $company)
 							<tr>
-								<td>{!!$race->id!!}</td>
-								<td>{!!$race->name!!}</td>
-								<td>{!!$race->company->name!!}</td>
-								<td>{!!$race->active!!}</td>
+								<td>{!!$company->id!!}</td>
+								<td>{!!$company->name!!}</td>
+								<td>{!!$company->email!!}</td>
+								<td>{!!$company->active!!}</td>
+														
 								<td>
-									<a href="{{ URL::to('races/' . $race->id) }}" class="btn btn-info">
-										<span><i class="fa fa-search-plus"></i></span>
-									</a>
-								</td>
-								
-								<td>
-								{!! Form::open(array('url' => 'races/' . $race->id, 'class' => 'pull-right' )) !!}
+								{!! Form::open(array('url' => 'companies/' . $company->id, 'class' => 'pull-right' )) !!}
 			                    {!! Form::hidden('_method', 'DELETE') !!}                   
 								<small>{!! Form::submit('Eliminar', array('class' => 'btn btn-xs btn-danger',)) !!}	</small>
 			                	{!! Form::close() !!}  										          	
@@ -83,26 +76,7 @@
 
 							</tr>
 						@endforeach
-						@endif
-					@else	
-						@if(!empty($data['races']) && isset($data['races']))
-						@foreach ($data['races'] as $race)
-							<tr>
-								<td>{!!$race->id!!}</td>
-								<td>{!!$race->name!!}</td>
-								<td>{!!$race->company->name!!}</td>
-								<td>{!!$race->active!!}</td>
-								<td>
-									<a href="{{ URL::to('races/' . $race->id) }}" class="btn btn-info">
-										<span><i class="fa fa-search-plus"></i></span>
-									</a>
-								</td>
-								
-								
-
-							</tr>
-						@endforeach
-						@endif
+						@endif					
 					@endif
 					
 					</tbody>

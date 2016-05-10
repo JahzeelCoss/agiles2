@@ -59,8 +59,16 @@ Route::get('races/all', 'RaceController@all');
 Route::post('races/{id}/registerRunner', 'RaceController@registerRunner');
 
 //Searches Routes
-Route::get('/search/race', 'SearchController@getPage');
+//	races
+Route::get('/search/race', 'SearchController@getRacesPage');
 Route::post('search/searchRace', 'SearchController@searchRace');
+// companies
+Route::get('/search/companies', 'SearchController@getCompaniesPage');
+Route::post('search/representatives', 'SearchController@searchCompany');
+// runners
+Route::get('/search/companies', 'SearchController@getCompaniesPage');
+Route::post('search/companies', 'SearchController@searchCompany');
+
 
 
 // Resources

@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Race;
+use App\Company;
 use Auth;
 use Entrust;
+use Redirect;
 
 class SearchController extends Controller
 {
   
-    public function getPage()
+    public function getRacesPage()
     {    	
         return view('searches.searchRace');
     }
@@ -39,6 +41,29 @@ class SearchController extends Controller
        $data['races'] = $races;
 
         return view('searches.searchRace')->with('data', $data);
+    }
+
+
+    public function getCompaniesPage()
+    {       
+        if(Entrust::hasRole('admin')){
+            return view('searches.searchCompany');
+        }else{
+            return Redirect::to('notifications');
+        }        
+    }
+
+    public function searchCompany(Request $request)
+    {   
+        $companies = null;
+        //return $request->input('name');
+        $companyName = $request->input('name');
+        $data = null;       
+                
+        $companies = Company::where("name","LIKE",'%'.$companyName.'%')->get();                    
+        $data['companies'] = $companies;
+
+        return view('searches.searchCompany')->with('data', $data);
     }
 
 }

@@ -26,7 +26,7 @@ class UserController extends Controller
     {
        if(Entrust::hasRole('admin')){
              $users = User::all();
-             return view('races.all')->with('races',$races);
+             return view('users.all')->with('users',$users);
         }
     }
 
