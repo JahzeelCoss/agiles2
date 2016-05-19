@@ -61,4 +61,5 @@ class Company extends Elegant
         $closedRaces = $this->races()->where('active','=','0')->get();
         return $closedRaces;
     }
+    
 }

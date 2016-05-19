@@ -9,7 +9,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="feature_header text-center">
                     <h3 class="feature_title">Carreras De <b>{!! $data['company']->name !!}</b></h3>
-                    <h4 class="feature_sub"></h4>
+                    <h4 class="feature_sub"><a href="{{ url('/races/create') }}" class="btn btn-info">Crear Carrera</a></h4>
                     <div class="divider"></div>
                 </div>
             </div>                        

@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('body')
-<br><br><br><br><br><br>
+<br><br><br><br>
 
     <section id="port-content">
         <div class="container">
@@ -52,8 +52,7 @@
                                     </div>
                                                                      
                                 </div>                           
-
-                                    <span class="form-icon fa fa-envelope-o"></span>
+                                    
                                 </div>                           
 
                                                                                    
@@ -78,7 +77,12 @@
                              <button class="btn btn-main featured" type="submit">Registrarme</button>
                         </div>                        
                     </form>   
+                    <hr>                    
                 </div>
+                <hr>
+                <small><a href="{{ url('/auth/registerRepresentative') }}" class="btn btn-xs btn-info pull-right">Registrarme como Organizador de carreras</a></small>
+                <hr>
+                <br>
             </div>
     
         </div>

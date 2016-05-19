@@ -75,8 +75,12 @@ class UserController extends Controller
             $data['isTheUser'] = true;  
         }
         if($user->hasRole('representative')){
-            $data['openRaces'] = $user->company->OpenRaces();
-            $data['closedRaces'] = $user->company->ClosedRaces();
+            $data['openRaces'] = null;
+            $data['closedRaces'] = null;
+            if($user->company){
+                $data['openRaces'] = $user->company->OpenRaces();
+                $data['closedRaces'] = $user->company->ClosedRaces();
+            }
             //return $user->company->OpenRaces();
             return view('representatives.show')->with('data', $data);
         }

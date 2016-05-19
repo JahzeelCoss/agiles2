@@ -45,19 +45,21 @@
 	            <div class="related-post">
 	                <h4>Mis Carreras Actuales</h4>
 	                <hr>
-	                @foreach($data['openRaces'] as $race) 
-	                	<div class="col-md-4 col-sm-4">
-		                    <div class="rel-post">
-		                        <a href="#">
-		                            <img src="{{ asset('uploads/races/'.$race->image) }}" alt="" lass="img-responsive">
-		                            <div class="caption">
-		                                <h4>{!! $race->name !!}</h4>
-		                               <p>{!! $race->description !!}</p>
-		                            </div>
-		                        </a>
-		                    </div>
-	               		</div>
-	                @endforeach	                
+	                @if($data['openRaces'])
+	                	@foreach($data['openRaces'] as $race) 
+		                	<div class="col-md-4 col-sm-4">
+			                    <div class="rel-post">
+			                        <a href="#">
+			                            <img src="{{ asset('uploads/races/'.$race->image) }}" alt="" lass="img-responsive">
+			                            <div class="caption">
+			                                <h4>{!! $race->name !!}</h4>
+			                               <p>{!! $race->description !!}</p>
+			                            </div>
+			                        </a>
+			                    </div>
+		               		</div>
+		                @endforeach	 
+	                @endif	                               
             	</div>
 	            <div class="clearfix">            	
 	            </div>
@@ -65,19 +67,21 @@
 	            <div class="related-post">
 	                <h4>Mis Carreras Terminadas</h4>
 	                <hr>
-	                @foreach($data['closedRaces'] as $race) 
-	                	<div class="col-md-4 col-sm-4">
-		                    <div class="rel-post">
-		                        <a href="#">
-		                            <img src="{{ asset('uploads/races/'.$race->image) }}" alt="" lass="img-responsive">
-		                            <div class="caption">
-		                                <h4>{!! $race->name !!}</h4>
-		                               <p>{!! $race->description !!}</p>
-		                            </div>
-		                        </a>
-		                    </div>
-	               		</div>
-	                @endforeach	                
+	                @if($data['closedRaces'])
+	                	@foreach($data['closedRaces'] as $race) 
+		                	<div class="col-md-4 col-sm-4">
+			                    <div class="rel-post">
+			                        <a href="#">
+			                            <img src="{{ asset('uploads/races/'.$race->image) }}" alt="" lass="img-responsive">
+			                            <div class="caption">
+			                                <h4>{!! $race->name !!}</h4>
+			                               <p>{!! $race->description !!}</p>
+			                            </div>
+			                        </a>
+			                    </div>
+		               		</div>
+		                @endforeach
+	                @endif	                	                
             	</div>
 	            <div class="clearfix">            	
 	            </div>          		

@@ -50,7 +50,6 @@
 				            <div class="col-md-8 col-md-offset-1 col-xm-12 col-xs-12">
 				                <div class="feature_header">
 				                    <h3 class="feature_title">Patrocinadores</h3>				                    
-				                    <div class="divider"></div>
 				                </div>
 				            </div>                        
 				        </div>
@@ -101,43 +100,45 @@
 					
 				</div>
 				<br><br>
-	            <div class="related-post">
-	                <h4>Otras Carreras</h4>
-	                <hr>
-	                <div class="col-md-4 col-sm-4">
-	                    <div class="rel-post">
-	                        <a href="#">
-	                            <img src="{{ asset('dist/theme/images/blog/pic6.jpg') }}" alt="" lass="img-responsive">
-	                            <div class="caption">
-	                                <h4>Otra Carrera</h4>
-	                               <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
-	                            </div>
-	                        </a>
-	                    </div>
-	                </div>
-	                <div class="col-md-4 col-sm-4">
-	                    <div class="rel-post">
-	                        <a href="#">
-	                            <img src="{{ asset('dist/theme/images/blog/pic7.jpg') }}" alt="" lass="img-responsive">
-	                            <div class="caption">
-	                                <h4>Otra Carrera</h4>
-	                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
-	                            </div>
-	                        </a>
-	                    </div>
-               		</div>
-	                <div class="col-md-4 col-sm-4">
-	                    <div class="rel-post">
-	                        <a href="#">
-	                            <img src="{{ asset('dist/theme/images/blog/pic8.jpg') }}" alt="" lass="img-responsive">
-	                            <div class="caption">
-	                                <h4>Otra Carrera</h4>
-	                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
-	                            </div>
-	                        </a>
-	                    </div>
-	                </div>
-            	</div>
+				@if(Entrust::hasRole('runner'))
+					<div class="related-post">
+		                <h4>Otras Carreras</h4>
+		                <hr>
+		                <div class="col-md-4 col-sm-4">
+		                    <div class="rel-post">
+		                        <a href="#">
+		                            <img src="{{ asset('dist/theme/images/blog/pic6.jpg') }}" alt="" lass="img-responsive">
+		                            <div class="caption">
+		                                <h4>Otra Carrera</h4>
+		                               <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+		                            </div>
+		                        </a>
+		                    </div>
+		                </div>
+		                <div class="col-md-4 col-sm-4">
+		                    <div class="rel-post">
+		                        <a href="#">
+		                            <img src="{{ asset('dist/theme/images/blog/pic7.jpg') }}" alt="" lass="img-responsive">
+		                            <div class="caption">
+		                                <h4>Otra Carrera</h4>
+		                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+		                            </div>
+		                        </a>
+		                    </div>
+	               		</div>
+		                <div class="col-md-4 col-sm-4">
+		                    <div class="rel-post">
+		                        <a href="#">
+		                            <img src="{{ asset('dist/theme/images/blog/pic8.jpg') }}" alt="" lass="img-responsive">
+		                            <div class="caption">
+		                                <h4>Otra Carrera</h4>
+		                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+		                            </div>
+		                        </a>
+		                    </div>
+		                </div>
+	            	</div>
+				@endif	           
 	            <div class="clearfix">            	
 	            </div>         		
            		       

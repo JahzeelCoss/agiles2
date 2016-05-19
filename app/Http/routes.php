@@ -15,7 +15,7 @@ use \App\Role;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('indexTheme');
 });
 
 Route::get('/index', ['middleware'=>'auth',function () {

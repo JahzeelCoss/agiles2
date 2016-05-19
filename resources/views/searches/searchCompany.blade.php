@@ -16,7 +16,7 @@
 
 				<form method="POST" class="">
 					{!! csrf_field() !!}
-	            	<div class="col-xs-8">	            		
+	            	<div class="col-xs-8">	           		
 
 				        <div class="form-group">
 				          {!! Form::text('name', old('name'), array('class'=>'form-control', 'placeholder'=>'Ingrese la compañia',
