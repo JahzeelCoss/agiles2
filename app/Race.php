@@ -54,4 +54,8 @@ class Race extends Elegant
     public function Users(){
         return $this->belongsToMany('App\User');
     }
+
+    public function getRacesByCategory($raceCategory){
+        $CategoryRaces = Races::where('category_id','=',$raceCategory)->get();
+    }
 }

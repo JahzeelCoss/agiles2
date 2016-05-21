@@ -44,70 +44,96 @@
 	                </div>
 	            @endif               
 	        </div>
-	    <div class="row">
-	    	<div>
-	    		<table class="table table-condensed table-striped table-hover">
-					<thead>
-						<tr>
-							<th>Id</th>								
-							<th>Nombre</th>
-							<th>Compañia</th>	
-							<th>Activa</th>		
-							<th>Ver</th>											
-							@if(isset($data) && $data['isTheUser'])
-								<th>Eliminar</th>	
-							@endif																
-						</tr>
-					</thead>
-					<tbody>
-					@if(isset($data) && $data['isTheUser'])
-						@if(!empty($data['races']) && isset($data['races']))
-						@foreach ($data['races'] as $race)
+	    @if(Entrust::hasRole('Admin'))
+		    <div class="row">
+		    	<div>
+		    		<table class="table table-condensed table-striped table-hover">
+						<thead>
 							<tr>
-								<td>{!!$race->id!!}</td>
-								<td>{!!$race->name!!}</td>
-								<td>{!!$race->company->name!!}</td>
-								<td>{!!$race->active!!}</td>
-								<td>
-									<a href="{{ URL::to('races/' . $race->id) }}" class="btn btn-info">
-										<span><i class="fa fa-search-plus"></i></span>
-									</a>
-								</td>
-								
-								<td>
-								{!! Form::open(array('url' => 'races/' . $race->id, 'class' => 'pull-right' )) !!}
-			                    {!! Form::hidden('_method', 'DELETE') !!}                   
-								<small>{!! Form::submit('Eliminar', array('class' => 'btn btn-xs btn-danger',)) !!}	</small>
-			                	{!! Form::close() !!}  										          	
-								</td>
-
+								<th>Id</th>								
+								<th>Nombre</th>
+								<th>Compañia</th>	
+								<th>Activa</th>		
+								<th>Ver</th>											
+								@if(isset($data) && $data['isTheUser'])
+									<th>Eliminar</th>	
+								@endif																
 							</tr>
-						@endforeach
-						@endif
-					@else	
-						@if(!empty($data['races']) && isset($data['races']))
-						@foreach ($data['races'] as $race)
-							<tr>
-								<td>{!!$race->id!!}</td>
-								<td>{!!$race->name!!}</td>
-								<td>{!!$race->company->name!!}</td>
-								<td>{!!$race->active!!}</td>
-								<td>
-									<a href="{{ URL::to('races/' . $race->id) }}" class="btn btn-info">
-										<span><i class="fa fa-search-plus"></i></span>
-									</a>
-								</td>
-								
-								
+						</thead>
+						<tbody>
+						@if(isset($data) && $data['isTheUser'])
+							@if(!empty($data['races']) && isset($data['races']))
+							@foreach ($data['races'] as $race)
+								<tr>
+									<td>{!!$race->id!!}</td>
+									<td>{!!$race->name!!}</td>
+									<td>{!!$race->company->name!!}</td>
+									<td>{!!$race->active!!}</td>
+									<td>
+										<a href="{{ URL::to('races/' . $race->id) }}" class="btn btn-info">
+											<span><i class="fa fa-search-plus"></i></span>
+										</a>
+									</td>
+									
+									<td>
+									{!! Form::open(array('url' => 'races/' . $race->id, 'class' => 'pull-right' )) !!}
+				                    {!! Form::hidden('_method', 'DELETE') !!}                   
+									<small>{!! Form::submit('Eliminar', array('class' => 'btn btn-xs btn-danger',)) !!}	</small>
+				                	{!! Form::close() !!}  										          	
+									</td>
 
-							</tr>
-						@endforeach
+								</tr>
+							@endforeach
+							@endif
+						@else	
+							@if(!empty($data['races']) && isset($data['races']))
+							@foreach ($data['races'] as $race)
+								<tr>
+									<td>{!!$race->id!!}</td>
+									<td>{!!$race->name!!}</td>
+									<td>{!!$race->company->name!!}</td>
+									<td>{!!$race->active!!}</td>
+									<td>
+										<a href="{{ URL::to('races/' . $race->id) }}" class="btn btn-info">
+											<span><i class="fa fa-search-plus"></i></span>
+										</a>
+									</td>
+									
+									
+
+								</tr>
+							@endforeach
+							@endif
 						@endif
-					@endif
-					
-					</tbody>
-				</table>				
-			</div>
-	    </div>
+						
+						</tbody>
+					</table>				
+				</div>
+		    </div>
+	    @else 
+	    <br><br><br>
+	    	<div class="divider"></div>
+	    	<div class="row">
+            @foreach($data['races'] as $race)
+            	<div class="col-lg-3 col-md-4 col-sm-6">
+				    <div class="single_blog">
+				        <div class="post_img text-center">
+				           <a href="{{ URL::to('races/' . $race->id) }}"><img src="{{ asset('uploads/races/'.$race->image) }}" alt="" class="img-responsive"></a>
+{{-- 				            <div class="post-date">
+				                <span>25</span> 6
+				            </div> --}}
+				        </div>
+				        <a href="{{ URL::to('races/' . $race->id) }}"><h4>{!! $race->name !!}</h4></a>
+				        <ul class="list-inline">
+				            <li> <i class="fa fa-bookmark"></i>  {!! $race->Company->name !!}</li>
+				            <li> <i class="fa fa-users"></i> {!! $race->current_inscriptions !!}</li>
+				        </ul>
+				        <p>{!! $race->description !!}</p>
+				    </div>
+				</div>	
+				
+			@endforeach
+        </div>
+	    @endif
 	</section>
 @stop
