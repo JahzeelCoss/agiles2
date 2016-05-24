@@ -60,9 +60,10 @@ class NotificationController extends Controller
      */
     public function show($id)
     {
-        Auth::user()->setAbleToParticipate();
-        return Auth::user()->getMyRacesByCategory(4);
-      return Auth::user()->getFavoriteCategory();
+       // Auth::user()->setAbleToParticipate();
+        return Auth::user()->getRecommendedRaces();
+      //return Auth::user()->getMyRacesByCategory(4);
+      //return Auth::user()->getFavoriteCategory();
     }
 
     /**

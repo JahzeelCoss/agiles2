@@ -68,7 +68,9 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        //
+        $company = Company::find($id);
+        $data['company'] = $company;
+        return view('companies.show')->with('data',$data);
     }
 
     /**

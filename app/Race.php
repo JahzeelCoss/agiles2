@@ -55,7 +55,16 @@ class Race extends Elegant
         return $this->belongsToMany('App\User');
     }
 
-    public function getRacesByCategory($raceCategory){
-        $CategoryRaces = Races::where('category_id','=',$raceCategory)->get();
+    public function scopeByCategory($query, $raceCategory){
+        return Race::where('category_id','=',$raceCategory)->get();
     }
+
+    public function scopeByType($query, $raceType){
+        return Race::where('type_id','=',$raceType)->get();
+    }
+
+    public function scopeActiveOnes($query){
+        return Race::where('active','=','1')->get();
+    }
+
 }

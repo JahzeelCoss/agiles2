@@ -11,19 +11,21 @@
 |
 */
 use \App\Role;
- use \App\User;
-
+use \App\User;
+use \App\Race;
 
 Route::get('/', function () {
-    return view('indexTheme');
+	$races = Race::activeOnes();
+    return view('realIndex')->with('races', $races);
 });
 
 Route::get('/index', ['middleware'=>'auth',function () {
-    return view('indexTheme');
+    return view('realIndex');
 }]);
 
 Route::get('/home', function () {
-    return view('indexTheme');
+    $races = Race::activeOnes();
+    return view('realIndex')->with('races', $races);
 });
 
 // Authentication routes...

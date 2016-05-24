@@ -42,7 +42,7 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
 
-    protected $ableToParticipate = 0;
+    protected $ableToParticipate = null;
 
     public function Company(){
         return $this->hasOne('App\Company');
@@ -81,6 +81,8 @@ class User extends Model implements AuthenticatableContract,
         }                  
         return $isOnRace;
     }
+
+    //RECIBE UNA CATEGORIA E IDENTIFICA SI PUEDE INSCRIBIRSE
     //1.-infantil
     //2.-hombres
     //3.-Mujeres
@@ -123,22 +125,72 @@ class User extends Model implements AuthenticatableContract,
         return $age;
     }
 
-    public function getRecommenderRaces(){
+    public function getRecommendedRaces(){
+        global $ableToParticipate;
         $races = null;
-        $favoriteCategory = $this->getFavoriteCategory();
-        if($favoriteCategory == null){
-            ;
-        }else{
-            $races = Race::getRacesByCategory($favoriteCategory());
-            $myRaces = $this->getMyRacesByCategory($favoriteCategory);
-            $recommended = $races->reject(function ($item) {
-                return $item->contains();
-            }); 
-
-
-            $races;
+        $recommendedRaces = null;
+        //$complementRaces = false;                
+        if($ableToParticipate == null){
+            $this->setAbleToParticipate();
         }
-
+        $favoriteType = $this->getFavoriteType();
+        $favoriteCategory = $this->getFavoriteCategory();
+        $myRaces = $this->races;        
+        if($myRaces->count()){//si tiene carreras siempre tendra un tipo "favorito" por lo tanto no es necesaria la comprobacion
+            //echo "tiene carreras\n";
+            $racesByType = Race::byType($favoriteType);
+            $myRaces = $this->getMyRacesByType($favoriteType, 4);
+            $racesByType = $racesByType->diff($myRaces);
+            $racesByType = $racesByType->filter(function($race){
+                if($race->active){
+                    return true;
+                }
+            });
+            //echo "carreras por tipo filtradas ".$racesByType->count()."\n";
+            $times = $racesByType->count();
+            for ($i=0; $i < $times; $i++) { 
+                $race = $racesByType->pop();//obtiene una carrera
+                //if($this->IsAbleToParticipate($race->category_id)){//si esta entre las categorias permitidas para el usuario
+                    //echo "si esta entre sus categorias";
+                if($this->IsRaceAvailableForUser($race)){//descarta en las que el usuario ya esta inscrito y por categorias
+                    //echo "si se recomenda";
+                    $recommendedRaces->push($race);
+                }
+                //}
+            }                                        
+            if($this->HasAtLeast($recommendedRaces, 4)){
+                //echo "tiene al menos 4 recomendadas\n";
+                return $recommendedRaces->take(4);
+            }else{//si con el tipo favorito aun no tiene las X carreras recomendadas entonces completamos con las categorias  
+                //echo "completa con categorias\n";
+                $racesByCategory = Race::byCategory($favoriteCategory);
+                $myRaces = $this->getMyRacesByCategory($favoriteCategory);
+                $racesByCategory = $racesByCategory->diff($myRaces);
+                $racesByCategory = $racesByCategory->diff($racesByType);
+                $racesByCategory = $racesByCategory->filter(function($race){
+                    if($race->active){
+                        return true;
+                    }
+                });
+                if ($recommendedRaces) {
+                    $recommendedRaces->push($racesByCategory);
+                }               
+                if($this->HasAtLeast($recommendedRaces, 4)){
+                    return $recommendedRaces->take(4);
+                }
+            }
+            
+        }
+        //si llego aqui es por que aun no completa la X cantidad de carreras recomendadas 
+        
+        //var_dump($recommendedRaces);
+        if($recommendedRaces){
+            $toFill = 4 - $recommendedRaces->count();
+            $recommendedRaces = $this->TakeAvailableRacesForUser($recommendedRaces, $toFill);
+        }else{
+            $recommendedRaces = $this->TakeAvailableRacesForUser($recommendedRaces, 4);
+        }
+        return $recommendedRaces;
     }
 
     public function setAbleToParticipate(){
@@ -161,20 +213,20 @@ class User extends Model implements AuthenticatableContract,
                 $ableToParticipate->push(5);
             }
             $ableToParticipate->forget(0); 
-        }       
-       
+        }              
     }
 
     public function getFavoriteCategory(){
         global $ableToParticipate;
         $category = null;
         $myRaces = $this->races;
+        $favoriteCategory = null;
         //$category = $myRaces->groupBy('category_id')->orderBy('COUNT(category_id)', 'desc')->value('category_id')->get();
         //
         //funciona
         //$category = Race::groupBy('category_id')->orderBy('category_id', 'asc')->havingRaw('COUNT(category_id)')->value('category_id');
         
-        if($myRaces){
+        if($myRaces->count()){
             $collection = null;
             $infantil = 0;
             $hombres = 0;
@@ -209,10 +261,79 @@ class User extends Model implements AuthenticatableContract,
         //return $myRaces;
     }
 
+    public function getFavoriteType(){
+        $type = null;
+        $myRaces = $this->races;
+        $favoriteType = null;
+        if($myRaces->count()){
+            $collection = null;
+            $maraton = 0;
+            $carrera = 0;
+            
+            $maraton = $myRaces->where('type_id',1)->count();
+            $carrera = $myRaces->where('type_id',2)->count();
+             $collection = collect([$maraton, $carrera]);
+            //var_dump($collection);
+            $maxima = $collection->max();
+            $favoriteType = $collection->search($maxima) + 1;
+        }
+        return $favoriteType;
+    }
+
     public function getMyRacesByCategory($raceCategory){
+        //return $this->races()->where('category_id','=',$raceCategory)->take($toTake);
         return $this->races()->where('category_id','=',$raceCategory)->get();
     }
 
+    public function getMyRacesByType($raceType, $toTake){
+        return $this->races()->where('type_id','=',$raceType)->take($toTake);
+    }
+
+    public function TakeAvailableRacesForUser($availableRaces, $toTake){             
+        $activeRaces = Race::activeOnes();        
+        $times = $activeRaces->count();
+        $currentRaces = 0;        
+        //$availableRaces = null;
+        if(!$availableRaces){
+            $availableRaces = collect();
+        }
+        for ($j=0; $j < $times; $j++) {                         
+            if($currentRaces == $toTake){//si ya tiene las necesarias
+                break;
+            }else{
+                $race = $activeRaces->pop();//obtiene una carrera                
+                if($this->IsAbleToParticipate($race->category_id)){//si esta entre las categorias permitidas para el usuario
+                    //echo "si esta entre sus categorias: ".$i."\n";
+                    if($this->IsRaceAvailableForUser($race)){//
+                        $availableRaces->push($race);
+                        $currentRaces++;
+                    }
+                }
+            }            
+        }
+        //echo $availableRaces->count();
+        return $availableRaces;
+    }
+
+    //verifica si la carrera de entrada no se encuentra entre las carreras del usuario y que si es de las categorias donde puede correr
+    public function IsRaceAvailableForUser($race){
+        $myRaces = $this->races;
+        $isRaceAvailableForUser = false;
+        if(!$myRaces->contains('id',$race->id)){
+            $isRaceAvailableForUser = $this->IsAbleToParticipate($race->category_id);
+        }
+        return $isRaceAvailableForUser;
+    }
+
+    public function HasAtLeast($collection, $atLeast){
+        $hasAtLeast = false;
+        if($collection){
+            if(!$collection->count() < $atLeast){
+                $hasAtLeast = true;
+            }
+        }        
+        return $hasAtLeast;
+    }
     // public function Category(){
     //     return $this->belongsTo('App\Category');
     // }

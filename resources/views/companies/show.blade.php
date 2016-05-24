@@ -7,46 +7,40 @@
             <div class="col-sm-10 col-sm-offset-1">
                <br><br>
                 <div class="text-center">
-                    <h4><span class="">{!! $data['user']->first_name !!} 
-                    	{!! $data['user']->last_name !!}</span></h4>                   
-                   
+                	<h3 class="feature_title"><b>{!! $data['company']->name !!} </b></h3>
                 </div>
                 <div class="divider"></div>
                 
                 
 				
 				<div class="featured_content">
-                    	<h5>Correo Electrónico: </h5>
-                    	<h4>{!! $data["user"]->email !!}</h4>
-                    </div>
+                	<h4>Correo Electrónico: </h4>
+                	<h5>{!! $data['company']->email !!}</h5>
+                </div>
+				<hr>
+                <div class="featured_content">
+                	<h4>Información Adicional de Contacto: </h4>
+                	<h5>{!! $data['company']->contact_info !!}</h5>
+                </div>
+				<hr>
+                <div class="featured_content">
+                	<h4>Direccion: </h4>
+                	<h5>{!! $data['company']->address !!}</h5>
+                </div>
+
+
                 <div class="clearfix">                	
                 </div>                           
 	           	<hr>
                       
 	           	<div class="divider"></div>
 	           	      
-				
-                
-				<div>					
-					@if($data['isTheUser'])
-						{!! Form::open(array('url' => 'users/' . $data['user']->id, 'class' => 'pull-right' )) !!}
-	                    {!! Form::hidden('_method', 'DELETE') !!}                   
-						<small>{!! Form::submit('Eliminar mi cuenta', array('class' => 'btn btn-xs btn-danger',)) !!}	</small>
-	                	{!! Form::close() !!} 						
-	                	
-					@else 
-					@endif					
-				</div>
-				<div class="clearfix">                	
-                </div> 
-				<div class="divider"></div>	
-
 				<br><br>
 	            <div class="related-post">
-	                <h4>Mis Carreras Actuales</h4>
+	                <h4>Carreras Actuales</h4>
 	                <hr>
-	                @if($data['openRaces'])
-	                	@foreach($data['openRaces'] as $race) 
+	                @if($data['company']->OpenRaces())
+	                	@foreach($data['company']->OpenRaces() as $race) 
 		                	<div class="col-md-4 col-sm-4">
 			                    <div class="rel-post">
 			                        <a href="{{ URL::to('races/' . $race->id) }}">
@@ -65,10 +59,10 @@
 	            </div>
 	             <br><br>
 	            <div class="related-post">
-	                <h4>Mis Carreras Terminadas</h4>
+	                <h4>Carreras Terminadas</h4>
 	                <hr>
-	                @if($data['closedRaces'])
-	                	@foreach($data['closedRaces'] as $race) 
+	                @if($data['company']->ClosedRaces())
+	                	@foreach($data['company']->ClosedRaces() as $race) 
 		                	<div class="col-md-4 col-sm-4">
 			                    <div class="rel-post">
 			                        <a href="{{ URL::to('races/' . $race->id) }}">
