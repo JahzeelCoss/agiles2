@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Race;
 use App\Company;
+use App\Role;
+use App\User;
 use Auth;
 use Entrust;
 use Redirect;
@@ -49,7 +51,7 @@ class SearchController extends Controller
         if(Entrust::hasRole('admin')){
             return view('searches.searchCompany');
         }else{
-            return Redirect::to('notifications');
+            return Redirect::to('index');
         }        
     }
 
@@ -66,4 +68,54 @@ class SearchController extends Controller
         return view('searches.searchCompany')->with('data', $data);
     }
 
+    public function getRunnersPage()
+    {       
+        if(Entrust::hasRole('admin')){
+            return view('searches.searchRunner');
+        }else{
+            return Redirect::to('index');
+        }        
+    }
+
+    public function searchRunner(Request $request)
+    {   
+        $runners = null;
+        //return $request->input('name');
+        $runnerName = $request->input('name');
+        //$data = null;       
+        $users = Role::where('name', 'runner')->first()->users()->get();     
+        $runners = User::where("first_name","LIKE",'%'.$runnerName.'%')->get();
+        //return $runners->count();
+        $runners2 = $runners->diff($users); 
+        //return $runners2->count();    
+        $runners = $users->diff($runners2);             
+        //return $runners->count();      
+        //$data['runners'] = $runners;
+
+        return view('searches.searchRunner')->with('runners', $runners);
+    }
+
+    public function getRepresentativesPage()
+    {       
+        if(Entrust::hasRole('admin')){
+            return view('searches.searchRepresentative');
+        }else{
+            return Redirect::to('index');
+        }        
+    }
+
+    public function searchRepresentative(Request $request)
+    {   
+        $runnerName = $request->input('name');
+        //$data = null;       
+        $users = Role::where('name', 'representative')->first()->users()->get();     
+        $representatives = User::where("first_name","LIKE",'%'.$runnerName.'%')->get();
+        //return $representatives->count();
+        $representatives2 = $representatives->diff($users); 
+        //return $representatives2->count();    
+        $representatives = $users->diff($representatives2);             
+        //return $representatives->count();      
+        //$data['representatives'] = $representatives;        
+        return view('searches.searchRepresentative')->with('representatives', $representatives);
+    }
 }

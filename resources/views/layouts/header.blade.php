@@ -25,9 +25,10 @@
                                                         
                                 @if(Auth::check())
                                     @if(Entrust::hasRole('admin'))
-                                        <a href="{{url('/users/allRepresentatives')}}" title="">Organizadores</a>
+                                        <a href="{{url('/search/companies')}}" title="">Empresas</a>
+                                        <a href="{{url('/search/representatives')}}" title="">Organizadores</a>
                                         <a href="{{url('/notifications')}}" title="">Notificaciones</a>
-                                        <a href="{{url('/users/allRunners')}}" title="">Corredores</a>
+                                        <a href="{{url('/search/runners')}}" title="">Corredores</a>
                                     @else 
                                         @if(Entrust::hasRole('representative'))
                                             @if(Auth::user()->company)

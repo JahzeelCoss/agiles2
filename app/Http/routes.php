@@ -66,11 +66,13 @@ Route::get('/search/race', 'SearchController@getRacesPage');
 Route::post('search/searchRace', 'SearchController@searchRace');
 // companies
 Route::get('/search/companies', 'SearchController@getCompaniesPage');
-Route::post('search/representatives', 'SearchController@searchCompany');
-// runners
-Route::get('/search/companies', 'SearchController@getCompaniesPage');
 Route::post('search/companies', 'SearchController@searchCompany');
-
+// runners
+Route::get('/search/runners', 'SearchController@getRunnersPage');
+Route::post('search/runners', 'SearchController@searchRunner');
+// representatives
+Route::get('/search/representatives', 'SearchController@getRepresentativesPage');
+Route::post('search/representatives', 'SearchController@searchRepresentative');
 
 
 // Resources

@@ -27,8 +27,15 @@ class RaceController extends Controller
             $races = Race::all();  
             return view('races.all')->with('races',$races);
         }elseif (Entrust::hasRole('representative')) {
-            $company = Auth::User()->Company;
+            $user = Auth::User();
+            $company = $user->Company;
             $races = $company->Races; 
+            $data['openRaces'] = null;
+            $data['closedRaces'] = null;
+            if($user->company){
+                $data['openRaces'] = $user->company->OpenRaces();
+                $data['closedRaces'] = $user->company->ClosedRaces();
+            }
             $data['company'] = $company;
             $data['races'] = $races;
             
@@ -207,7 +214,7 @@ class RaceController extends Controller
                 Mail::send('emails.changeOnRace', $data, function ($message) {
                     $message->from('us@example.com', 'YUCARUN');
                     $message->to($user->email);
-                    $message->subject('Una Carrera ha cambiado si información.');
+                    $message->subject('Una Carrera ha cambiado su información.');
                 });
             }
             

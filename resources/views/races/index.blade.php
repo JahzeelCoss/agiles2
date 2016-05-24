@@ -15,25 +15,50 @@
             </div>                        
         </div>
         <div class="row">
-            @foreach($data['races'] as $race)
-            	<div class="col-lg-3 col-md-4 col-sm-6">
-				    <div class="single_blog">
-				        <div class="post_img text-center">
-				           <a href="{{ URL::to('races/' . $race->id) }}"><img src="{{ asset('uploads/races/'.$race->image) }}" alt="" class="img-responsive"></a>
-{{-- 				            <div class="post-date">
-				                <span>25</span> 6
-				            </div> --}}
-				        </div>
-				        <a href="{{ URL::to('races/' . $race->id) }}"><h4>{!! $race->name !!}</h4></a>
-				        <ul class="list-inline">
-				            <li> <i class="fa fa-bookmark"></i>  {!! $race->Company->name !!}</li>
-				            <li> <i class="fa fa-users"></i> {!! $race->current_inscriptions !!}</li>
-				        </ul>
-				        <p>{!! $race->description !!}</p>
-				    </div>
-				</div>	
-				
-			@endforeach
+            <br><br>
+	            <div class="related-post">
+	                <h4>Mis Carreras Actuales</h4>
+	                <hr>
+	                @if($data['openRaces'])
+	                	@foreach($data['openRaces'] as $race) 
+		                	<div class="col-md-4 col-sm-4">
+			                    <div class="rel-post">
+			                        <a href="{{ URL::to('races/' . $race->id) }}">
+			                            <img src="{{ asset('uploads/races/'.$race->image) }}" alt="" lass="img-responsive">
+			                            <div class="caption">
+			                                <h4>{!! $race->name !!}</h4>
+			                               <p>{!! $race->description !!}</p>
+			                            </div>
+			                        </a>
+			                    </div>
+		               		</div>
+		                @endforeach	 
+	                @endif	                               
+            	</div>
+	            <div class="clearfix">            	
+	            </div>
+	             <br><br>
+	            <div class="related-post">
+	                <h4>Mis Carreras Terminadas</h4>
+	                <hr>
+	                @if($data['closedRaces'])
+	                	@foreach($data['closedRaces'] as $race) 
+		                	<div class="col-md-4 col-sm-4">
+			                    <div class="rel-post">
+			                        <a href="{{ URL::to('races/' . $race->id) }}">
+			                            <img src="{{ asset('uploads/races/'.$race->image) }}" alt="" lass="img-responsive">
+			                            <div class="caption">
+			                                <h4>{!! $race->name !!}</h4>
+			                               <p>{!! $race->description !!}</p>
+			                            </div>
+			                        </a>
+			                    </div>
+		               		</div>
+		                @endforeach
+	                @endif	                	                
+            	</div>
+	            <div class="clearfix">            	
+	            </div> 
         </div>
     </div>
 </section>  

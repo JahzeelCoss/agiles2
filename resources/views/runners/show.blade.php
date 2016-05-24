@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('body')
-
+	<br><br><br><br>
 	<section id="blog-single">
         <div class="container">
             <!-- Portfolio item slider start -->
