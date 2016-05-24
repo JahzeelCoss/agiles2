@@ -62,4 +62,28 @@ class Company extends Elegant
         return $closedRaces;
     }
     
+    public function UsersOfMyRaces(){
+        $races = $this->ClosedRaces();
+        $usersOfMyRaces = collect();
+        //$users = collect();
+        if($races){//si tiene carreras terminadas            
+            foreach ($races as $race) {
+                $users = $race->users;
+                if($users->count()){
+                    if($usersOfMyRaces->count()){
+
+                    }else{
+                        $usersOfMyRaces->merge($users);
+                    }
+                    $users = $users->filter(function($race){
+                        if($usersOfMyRaces->contains($user)){
+                            return true;
+                        }
+                    });
+
+                }
+            }
+        } 
+        return $usersOfMyRaces;       
+    }
 }

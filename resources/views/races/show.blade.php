@@ -44,38 +44,56 @@
 				<div class="">
                    <img src="{{ asset('uploads/races/routes/'.$data['race']->route) }}" alt="" class="img-responsive"/>		                   
                 </div>
-                <section id="port-content">
-				    <div class="container">
-				        <div class="row"><!--  título -->
-				            <div class="col-md-8 col-md-offset-1 col-xm-12 col-xs-12">
-				                <div class="feature_header">
-				                    <h3 class="feature_title">Patrocinadores</h3>				                    
-				                </div>
-				            </div>                        
-				        </div>
-				        <div class="row">            
-							<div id="owl-demo" class="owl-carousel owl-theme team-items">
-								@foreach($data['race']->Company->Sponsors as $sponsor)
-									<div class="item text-center">
-					                    <div class="single-member">
-					                        <div class="overlay-hover">
-					                            <img src="{{ asset('uploads/sponsors/'.$sponsor->image) }}" alt="" class="img-responsive">                          
-					                        </div>
-					                        <h3>{!! $sponsor->name !!}</h3>                        
-					                    </div>
-					                </div>  <!-- item wrapper end -->
-								@endforeach	                
-					    	</div>			
-				        </div>
-				    </div>
-				</section>  
+                @if($data['race']->Company->Sponsors->count())
+                	<section id="port-content">
+					    <div class="container">
+					        <div class="row"><!--  título -->
+					            <div class="col-md-8 col-md-offset-1 col-xm-12 col-xs-12">
+					                <div class="feature_header">
+					                    <h3 class="feature_title">Patrocinadores</h3>				                    
+					                </div>
+					            </div>                        
+					        </div>
+					        <div class="row">            
+								<div id="owl-demo" class="owl-carousel owl-theme team-items">
+									@foreach($data['race']->Company->Sponsors as $sponsor)
+										<div class="item text-center">
+						                    <div class="single-member">
+						                        <div class="overlay-hover">
+						                            <img src="{{ asset('uploads/sponsors/'.$sponsor->image) }}" alt="" class="img-responsive">                          
+						                        </div>
+						                        <h3>{!! $sponsor->name !!}</h3>                        
+						                    </div>
+						                </div>  <!-- item wrapper end -->
+									@endforeach	                
+						    	</div>			
+					        </div>
+					    </div>
+					</section>  
+                @endif
+               
 				<div>
 					<div class="divider"></div>
 					@if($data['hasPermission']) 
-						{!! Form::open(array('url' => 'races/' . $data['race']->id, 'class' => 'pull-right' )) !!}
+						
+	                	
+						@if($data['race']->active)
+							{!! Form::open(array('url' => 'races/' . $data['race']->id, 'class' => 'pull-right' )) !!}
 	                    {!! Form::hidden('_method', 'DELETE') !!}                   
 						<small>{!! Form::submit('Eliminar Esta Carrera', array('class' => 'btn btn-xs btn-danger',)) !!}	</small>
-	                	{!! Form::close() !!}   
+	                	{!! Form::close() !!} 
+							<p class="row">
+							<small class="pull-right ">
+		                		<a class="btn btn-xs btn-warning" href="{{ url('/races/'.$data['race']->id.'/edit') }}">
+		                			Editar Carrera
+		                		</a>
+		                	</small>
+						</p> 
+							{!! Form::open(array('url' => 'races/' . $data['race']->id . '/activate', 'class' => 'pull-right', 'action' => 'RaceController@activate' )) !!}           
+					                  
+							{!! Form::submit('Terminar Carrera', array('class' => 'btn btn-xs btn-danger',)) !!}	                   
+					        {!! Form::close() !!} 
+						@endif						
 					@endif
 
 					@if(!$data['race']->active)
@@ -100,45 +118,7 @@
 					
 				</div>
 				<br><br>
-				@if(Entrust::hasRole('runner'))
-					<div class="related-post">
-		                <h4>Otras Carreras</h4>
-		                <hr>
-		                <div class="col-md-4 col-sm-4">
-		                    <div class="rel-post">
-		                        <a href="#">
-		                            <img src="{{ asset('dist/theme/images/blog/pic6.jpg') }}" alt="" lass="img-responsive">
-		                            <div class="caption">
-		                                <h4>Otra Carrera</h4>
-		                               <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
-		                            </div>
-		                        </a>
-		                    </div>
-		                </div>
-		                <div class="col-md-4 col-sm-4">
-		                    <div class="rel-post">
-		                        <a href="#">
-		                            <img src="{{ asset('dist/theme/images/blog/pic7.jpg') }}" alt="" lass="img-responsive">
-		                            <div class="caption">
-		                                <h4>Otra Carrera</h4>
-		                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
-		                            </div>
-		                        </a>
-		                    </div>
-	               		</div>
-		                <div class="col-md-4 col-sm-4">
-		                    <div class="rel-post">
-		                        <a href="#">
-		                            <img src="{{ asset('dist/theme/images/blog/pic8.jpg') }}" alt="" lass="img-responsive">
-		                            <div class="caption">
-		                                <h4>Otra Carrera</h4>
-		                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
-		                            </div>
-		                        </a>
-		                    </div>
-		                </div>
-	            	</div>
-				@endif	           
+				
 	            <div class="clearfix">            	
 	            </div>         		
            		       

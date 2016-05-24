@@ -6,7 +6,7 @@
   La carrera modificada es:
 </p>
 <ul>
-  <li><strong>{{ $data['race']->name }}</strong></li>
+  <li><strong><a href="{{ URL::to('races/' . $data['race']->id) }}">{!! $data['race']->name !!}</a></strong></li>
 </ul>
 <hr>
 <p>

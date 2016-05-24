@@ -108,10 +108,35 @@ class RaceController extends Controller
 
             $new_race->save();
             //$races = Race::all();
+            //
+            //se envian los mensajes a los usuarios de mis carreras pasadas
+            $company = $current_user->company;
+            $users = $company->UsersOfMyRaces();            
+            $data['race'] = $new_race;
+            $data['company'] = $company;
+            foreach ($users as $user) {
+                           
+                Mail::send('emails.newRaceInvitation', $data, function ($message) {
+                    $message->from('Yucarun@hotmail.com', 'YUCARUN');
+                    $message->to($user->email);
+                    $message->subject('Esta Carrera puede ser de tu interés.');
+                });
+            }
+
+            
             $company = Auth::User()->Company;
             $races = $company->Races; 
             $data['company'] = $company;
             $data['races'] = $races;
+            $data['openRaces'] = null;
+            $data['closedRaces'] = null;
+            if($company){
+                $data['openRaces'] = $company->OpenRaces();
+                $data['closedRaces'] = $company->ClosedRaces();
+            }
+            $data['company'] = $company;
+            $data['races'] = $races;
+            
             return view('races.index')->with('data',$data);            
         }else{
             $errors = $new_race->errors();
@@ -133,7 +158,7 @@ class RaceController extends Controller
         $data['isRunner'] = false;
         $data['isRunnerOnRace'] = false;       
         if(Entrust::hasRole('representative')){
-            if(Auth::User()->company->id == $id){
+            if(Auth::User()->company->id == $race->company_id){
                 $data['hasPermission'] = true;
             }
         }else{
@@ -267,6 +292,15 @@ class RaceController extends Controller
         $race->current_inscriptions = $inscriptions + 1; 
         $race->users()->attach(Auth::User()->id);
         $race->save();
+        return Redirect::to('index');
+    }
+
+    public function activate($id)
+    {
+        $race = Race::find($id);
+        $race->active = false;
+        $race->update();
+
         return Redirect::to('index');
     }
 }

@@ -20,7 +20,8 @@ Route::get('/', function () {
 });
 
 Route::get('/index', ['middleware'=>'auth',function () {
-    return view('realIndex');
+    $races = Race::activeOnes();
+    return view('realIndex')->with('races', $races);
 }]);
 
 Route::get('/home', function () {
@@ -74,6 +75,11 @@ Route::post('search/runners', 'SearchController@searchRunner');
 Route::get('/search/representatives', 'SearchController@getRepresentativesPage');
 Route::post('search/representatives', 'SearchController@searchRepresentative');
 
+Route::post('races/{id}/activate', 'RaceController@activate');
+
+Route::get('/prueba', function () {
+    return view('prueba');
+});
 
 // Resources
 Route::resource('users', 'UserController');
