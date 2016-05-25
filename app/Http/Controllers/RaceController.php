@@ -41,7 +41,7 @@ class RaceController extends Controller
             
             return view('races.index')->with('data',$data);
         }else{
-            return redirect('index');
+           
         }        
     }
 
@@ -151,7 +151,7 @@ class RaceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
+    {        
         $race = Race::find($id);
         $data['race'] = $race;
         $data['hasPermission'] = false;
@@ -168,8 +168,11 @@ class RaceController extends Controller
                     $data['isRunnerOnRace'] = true;   
                 }
             }
-        }       
-        return view('races.show')->with('data', $data);
+        } 
+        if($data['race'] == null){
+        }   else{
+            return view('races.show')->with('data', $data);    
+        }                 
     }
 
     /**
@@ -287,11 +290,18 @@ class RaceController extends Controller
 
     public function registerRunner($id)
     {
+        $user = Auth::user();
         $race = Race::find($id);
-        $inscriptions = $race->current_inscriptions;
-        $race->current_inscriptions = $inscriptions + 1; 
-        $race->users()->attach(Auth::User()->id);
-        $race->save();
+        if($user->IsAbleToParticipate($race->category_id)){            
+            $inscriptions = $race->current_inscriptions;
+            $race->current_inscriptions = $inscriptions + 1; 
+            $race->users()->attach(Auth::User()->id);
+            $race->save();
+            $races = Race::activeOnes();
+             return Redirect::to('index');
+        }else{
+            return Redirect::back();
+        }        
         return Redirect::to('index');
     }
 
@@ -302,5 +312,17 @@ class RaceController extends Controller
         $race->update();
 
         return Redirect::to('index');
+    }
+
+    public function paymentPage($id){
+        $race = Race::find($id);
+        return view('races.payment')->with('race', $race);
+    }
+
+    public function myRaces(){        
+        $user = Auth::user();
+        $data['openRaces'] = $user->MyActiveRaces(); 
+        $data['closedRaces'] = $user->MyDeactiveRaces(); 
+        return view('races.userRaces')->with('data',$data);
     }
 }

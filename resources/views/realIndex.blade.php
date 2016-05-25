@@ -14,7 +14,7 @@
            	<div class="carousel-inner">
            	 	<div class="item active">
            	 		<div class="overlay-slide">
-           	 			<img src="images/banner/p5.jpg" alt="" class="img-responsive">
+           	 			<img src="{{ asset('uploads/carousel/1.jpg') }}" alt="" class="img-responsive">
            	 		</div>
            	 		<div class="carousel-caption">
                	 		<div class="col-md-12 col-xs-12 text-center">
@@ -27,7 +27,7 @@
            	 	</div>
                 <div class="item">
                     <div class="overlay-slide">
-                        <img src="images/banner/p3.jpg" alt="" class="img-responsive">
+                        <img src="{{ asset('uploads/carousel/2.jpg') }}" alt="" class="img-responsive">
            	 		</div>
            	 		<div class="carousel-caption">
                	 		<div class="col-md-12 col-xs-12 text-center">
@@ -40,7 +40,7 @@
            	 	</div>
            	 	<div class="item">
                     <div class="overlay-slide">
-                        <img src="images/banner/p10.jpg" alt="" class="img-responsive">
+                        <img src="{{ asset('uploads/carousel/3.jpg') }}" alt="" class="img-responsive">
            	 		</div>
            	 		<div class="carousel-caption">
                	 		<div class="col-md-12 col-xs-12 text-center">
@@ -74,39 +74,44 @@
 @if(Auth::user())
     @if(Auth::user()->hasRole('runner'))
         @if(Auth::user()->getRecommendedRaces()->count())
-            <section id="blog">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="feature_header text-center">
-                            <h3 class="feature_title"><b>Recomendaciones</b></h3>
-                            <div class="divider"></div>
-                        </div>
-                    </div>  <!-- Col-md-12 End -->
-                </div>
-                <div class="row">
-                    @foreach(Auth::user()->getRecommendedRaces() as $race)
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="single_blog">
-                                <div class="post_img text-center">
-                                   <a href="{{ URL::to('races/' . $race->id) }}"><img src="{{ asset('uploads/races/'.$race->image) }}" alt="" class="img-responsive"></a>
-        {{--                            <div class="post-date">
-                                        <span>25</span> 6
-                                    </div> --}}
-                                </div>
-                                <a href="{{ URL::to('races/' . $race->id) }}"><h4>{!! $race->name !!}</h4></a>
-                                <ul class="list-inline">
-                                    <li> <i class="fa fa-bookmark"></i>  {!! $race->Company->name !!}</li>
-                                    <li> <i class="fa fa-users"></i> {!! $race->current_inscriptions !!}</li>
-                                </ul>
-                                <p>{!! $race->description !!}</p>
+            @if(Auth::user()->getRecommendedRaces()->first() == null))
+              
+            @else
+              <section id="blog">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="feature_header text-center">
+                                <h3 class="feature_title"><b>Recomendaciones</b></h3>
+                                <div class="divider"></div>
                             </div>
-                        </div>  
-                        
-                    @endforeach
+                        </div>  <!-- Col-md-12 End -->
+                    </div>
+                    <div class="row">
+                        @foreach(Auth::user()->getRecommendedRaces() as $race)
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="single_blog">
+                                    <div class="post_img text-center">
+                                       <a href="{{ URL::to('races/' . $race->id) }}"><img src="{{ asset('uploads/races/'.$race->image) }}" alt="" class="img-responsive"></a>
+            {{--                            <div class="post-date">
+                                            <span>25</span> 6
+                                        </div> --}}
+                                    </div>
+                                    <a href="{{ URL::to('races/' . $race->id) }}"><h4>{!! $race->name !!}</h4></a>
+                                    <ul class="list-inline">
+                                        <li> <i class="fa fa-bookmark"></i>  {!! $race->Company->name !!}</li>
+                                        <li> <i class="fa fa-users"></i> {!! $race->current_inscriptions !!}</li>
+                                    </ul>
+                                    <p>{!! $race->description !!}</p>
+                                </div>
+                            </div>  
+                            
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-        </section>
+              </section>  
+            @endif
+           
         <!-- bLOG End -->
         @endif        
     @endif

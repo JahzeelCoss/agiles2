@@ -12,6 +12,8 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Collection;
 
 use App\Race;
+use Carbon\Carbon;
+use DateTime;
 
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
@@ -121,7 +123,14 @@ class User extends Model implements AuthenticatableContract,
     }
 
     public function getAge(){
-        $age = 22;
+        //return $carbon = Carbon::instance(strtotime($this->born_date));
+        $today = Carbon::today();
+        // $fecha = DateTime::createFromFormat('j-M-Y', '15-Feb-2009');
+        //return var_dump($fecha);
+        //return $this->born_date;
+        $born_date = Carbon::createFromFormat('Y-m-d', ''.$this->born_date);
+        $age = $today->diffInYears($born_date);  
+        $age = $born_date->diffInYears($today);     
         return $age;
     }
 
@@ -154,7 +163,11 @@ class User extends Model implements AuthenticatableContract,
                     //echo "si esta entre sus categorias";
                 if($this->IsRaceAvailableForUser($race)){//descarta en las que el usuario ya esta inscrito y por categorias
                     //echo "si se recomenda";
-                    $recommendedRaces->push($race);
+                    if($recommendedRaces == null){
+                        $recommendedRaces = collect([$races]);
+                    }else{
+                        $recommendedRaces->push($race);
+                    }                    
                 }
                 //}
             }                                        
@@ -333,6 +346,16 @@ class User extends Model implements AuthenticatableContract,
             }
         }        
         return $hasAtLeast;
+    }
+
+    public function MyActiveRaces(){
+        $races = $this->races->where('active',1);
+        return $races;
+    }
+
+    public function MyDeactiveRaces(){
+        $races = $this->races->where('active',0);
+        return $races;
     }
     // public function Category(){
     //     return $this->belongsTo('App\Category');

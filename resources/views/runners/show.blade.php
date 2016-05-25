@@ -11,11 +11,17 @@
                 	@endif             	                    
                 </div>
                 <div class="text-center">
-                    <h4><span class="">{!! $data['user']->first_name !!} 
-                    	{!! $data['user']->last_name !!}</span></h4>                   
+                	 <div class="row">
+		                <div class="col-md-12 col-sm-12 col-xs-12">
+		                    <div class="feature_header text-center">
+		                        <h3 class="feature_title"><b>{!! $data['user']->first_name !!} 
+                    	{!! $data['user']->last_name !!}</b></h3>
+		                        <div class="divider"></div>
+		                    </div>
+		                </div>  <!-- Col-md-12 End -->
+		            </div>                                  
                    
-                </div>
-                <div class="divider"></div>
+                </div>                
                 
                 <div class="featured_content">
                     	<h5>Fecha de nacimiento: </h5>
@@ -49,17 +55,17 @@
 	           	      
 				
                 
-				<div>					
+				<div class="text-center">					
 					@if($data['isTheUser'])
 						<p class="row">
-							{!! Form::open(array('url' => 'users/' . $data['user']->id, 'class' => 'pull-right' )) !!}
+							{!! Form::open(array('url' => 'users/' . $data['user']->id)) !!}
 		                    {!! Form::hidden('_method', 'DELETE') !!}                   
 							<small>{!! Form::submit('Eliminar mi cuenta', array('class' => 'btn btn-xs btn-danger',)) !!}	</small>
 		                	{!! Form::close() !!} 	
 						</p>
 							                	 
 						<p class="row">
-							<small class="pull-right ">
+							<small class="">
 		                		<a class="btn btn-xs btn-warning" href="{{ url('/users/'.$data['user']->id.'/edit') }}">
 		                			Editar mi información
 		                		</a>
@@ -73,44 +79,7 @@
                 </div> 
 				<div class="divider"></div>	
 
-				<br><br>
-	            <div class="related-post">
-	                <h4>Carreras en las que he participado</h4>
-	                <hr>
-	                <div class="col-md-4 col-sm-4">
-	                    <div class="rel-post">
-	                        <a href="#">
-	                            <img src="{{ asset('dist/theme/images/blog/pic6.jpg') }}" alt="" lass="img-responsive">
-	                            <div class="caption">
-	                                <h4>Otra Carrera</h4>
-	                               <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
-	                            </div>
-	                        </a>
-	                    </div>
-	                </div>
-	                <div class="col-md-4 col-sm-4">
-	                    <div class="rel-post">
-	                        <a href="#">
-	                            <img src="{{ asset('dist/theme/images/blog/pic7.jpg') }}" alt="" lass="img-responsive">
-	                            <div class="caption">
-	                                <h4>Otra Carrera</h4>
-	                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
-	                            </div>
-	                        </a>
-	                    </div>
-               		</div>
-	                <div class="col-md-4 col-sm-4">
-	                    <div class="rel-post">
-	                        <a href="#">
-	                            <img src="{{ asset('dist/theme/images/blog/pic8.jpg') }}" alt="" lass="img-responsive">
-	                            <div class="caption">
-	                                <h4>Otra Carrera</h4>
-	                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
-	                            </div>
-	                        </a>
-	                    </div>
-	                </div>
-            	</div>
+				<br><br>	           
 	            <div class="clearfix">            	
 	            </div>         		
            		       

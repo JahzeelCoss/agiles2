@@ -14,7 +14,7 @@
            	<div class="carousel-inner">
            	 	<div class="item active">
            	 		<div class="overlay-slide">
-           	 			<img src="images/banner/p5.jpg" alt="" class="img-responsive">
+           	 			<img src="{{ asset(/uploads/carousel/1.jpg) }} alt="" class="img-responsive">
            	 		</div>
            	 		<div class="carousel-caption">
                	 		<div class="col-md-12 col-xs-12 text-center">

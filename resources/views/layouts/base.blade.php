@@ -43,6 +43,9 @@
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
         <link href='http://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,500' rel='stylesheet' type='text/css'>
+
+        <link href="{{ asset('dist/creditcardjs/creditcardjs-v0.10.13.min.css') }}" rel="stylesheet">
+
     @show
 </head>
 
@@ -102,6 +105,7 @@
              <!-- Custom js -->
         <script src="{{ asset('dist/theme/js/custom.js') }}"></script>
 
+        <script src="{{ asset('dist/creditcardjs/creditcardjs-v0.10.13.min.js') }}"></script>
 
         <script>
               $('#portfolio-slider').bxSlider({

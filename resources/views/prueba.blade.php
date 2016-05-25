@@ -1,25 +1,25 @@
-<link href="/update/this/path/creditcardjs-v0.10.13.min.css" rel="stylesheet">
+<link href="{{ asset('dist/creditcardjs/creditcardjs-v0.10.13.min.css') }}" rel="stylesheet">
 
 <div class="ccjs-card">
   <label class="ccjs-number">
-    Card Number
+    Número de Tarjeta
     <input name="card-number" class="ccjs-number" placeholder="•••• •••• •••• ••••">
   </label>
 
   <label class="ccjs-csc">
-    Security Code
+    Código de Seguridad
     <input name="csc" class="ccjs-csc" placeholder="•••">
   </label>
 
   <button type="button" class="ccjs-csc-help">?</button>
 
   <label class="ccjs-name">
-    Name on Card
+    Nombre en Tarjeta
     <input name="name" class="ccjs-name">
   </label>
 
   <fieldset class="ccjs-expiration">
-    <legend>Expiration</legend>
+    <legend>Expiración</legend>
     <select name="month" class="ccjs-month">
       <option selected disabled>MM</option>
       <option value="01">01</option>
@@ -67,13 +67,15 @@
   </select>
 </div>
 
-<script src="/update/this/path/creditcardjs-v0.10.13.min.js"></script>
+<script src="{{ asset('dist/creditcardjs/creditcardjs-v0.10.13.min.js') }}"></script>
 <script type="text/javascript" charset="utf-8">
   creditcardjs.onValidityChange(function(isValid) {
-  if (isValid) {
-    /* allow form submission */
-  } else {
-    /* prevent form submission */
-  }
-});
+    if (isValid) {
+      
+    } else {
+      document.getElementById("myCheckbox").addEventListener("click", function(event){
+          event.preventDefault()
+      });
+    }
+  });
 </script>

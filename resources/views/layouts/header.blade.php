@@ -42,7 +42,7 @@
                                                  <a href="{{url('/companies/create')}}" title="">Agregar Empresa</a> 
                                             @endif
                                         @else
-                                            <a href="{{url('')}}" title="">Mis Carreras</a>
+                                            <a href="{{url('/races/myraces')}}" title="">Mis Carreras</a>
                                         @endif                                        
                                     @endif                                                                        
                                     <a href="{{url('/users/'.Auth::user()->id)}}" title="">{!!Auth::user()->first_name!!}</a>    

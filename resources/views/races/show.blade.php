@@ -40,6 +40,18 @@
                 </div>                             
                 <div class="clearfix">              
                 </div>
+                @if($data['race']->fee > 0)
+	               	<hr>
+	                 <div class="clearfix">                 
+	                </div>
+	                <div class="">
+	                    <p><span class="pull-left"><strong>Precio:&nbsp;&nbsp;</strong></span> 
+	                    	<button type="button" class="btn btn-primary text-center">Precio <span class="badge">${!! $data['race']->fee !!}</span></button>	                    	
+	                    </p>                      
+	                </div>                             
+	                <div class="clearfix">              
+	                </div>
+                @endif
                 <hr>	      
 				<div class="">
                    <img src="{{ asset('uploads/races/routes/'.$data['race']->route) }}" alt="" class="img-responsive"/>		                   
@@ -74,8 +86,7 @@
                
 				<div>
 					<div class="divider"></div>
-					@if($data['hasPermission']) 
-						
+					@if($data['hasPermission']) 					
 	                	
 						@if($data['race']->active)
 							{!! Form::open(array('url' => 'races/' . $data['race']->id, 'class' => 'pull-right' )) !!}
@@ -106,10 +117,16 @@
 								@if ($data['isRunnerOnRace'])
 									<span class="text-center"><h4>Ya estás inscrito a esta carrera!</h4></span>
 								@else 
-									{!! Form::open(array('url' => 'races/' . $data['race']->id . '/registerRunner', 'class' => 'text-center', 'action' => 'RaceController@registerRunner' )) !!} 	     
-									{!! Form::submit('Inscribirme a la Carrera!', array('class' => 'btn btn-xs btn-info',)) !!}	   
-									                       
-				                	{!! Form::close() !!}
+									@if($data['race']->fee > 0)
+									<div class="text-center">
+										<a href="{{ url('/races/'.$data['race']->id.'/payment') }}" class="btn btn-info">Inscribirme a la Carrera!</a>
+									</div>										
+									@else
+										{!! Form::open(array('url' => 'races/' . $data['race']->id . '/registerRunner', 'class' => 'text-center', 'action' => 'RaceController@registerRunner' )) !!} 	     
+										{!! Form::submit('Inscribirme a la Carrera!', array('class' => 'btn btn-xs btn-info',)) !!}	   
+										                       
+					                	{!! Form::close() !!}
+									@endif									
 								@endif						  
 							@endif	
 						@endif

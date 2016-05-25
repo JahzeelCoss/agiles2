@@ -19,7 +19,8 @@ Route::get('/', function () {
     return view('realIndex')->with('races', $races);
 });
 
-Route::get('/index', ['middleware'=>'auth',function () {
+Route::get('/index', ['middleware'=>'auth',function () {	 
+    //return User::find(60)->getRecommendedRaces();
     $races = Race::activeOnes();
     return view('realIndex')->with('races', $races);
 }]);
@@ -58,8 +59,15 @@ Route::get('users/allRunners', 'UserController@allRunners');
 Route::get('users/allRepresentatives', 'UserController@allRepresentatives');
 Route::get('races/all', 'RaceController@all');
 
+
 //Register paricipant
 Route::post('races/{id}/registerRunner', 'RaceController@registerRunner');
+
+//Payment
+Route::get('races/{id}/payment', 'RaceController@paymentPage');
+Route::post('races/{id}/payment', 'RaceController@registerRunner');
+
+Route::get('races/myraces','RaceController@myRaces');
 
 //Searches Routes
 //	races
@@ -79,6 +87,9 @@ Route::post('races/{id}/activate', 'RaceController@activate');
 
 Route::get('/prueba', function () {
     return view('prueba');
+});
+Route::get('/prueba2', function () {
+    return User::find(66)->getAge();
 });
 
 // Resources
